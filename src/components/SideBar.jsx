@@ -40,7 +40,7 @@ export default function SideBar() {
         <section className='w-[90%] mx-auto'>
 
       <Link href="/home" className="w-[221px] pt-[60px] flex items-center gap-1 mx-auto">
-        <img src="./Group 1.svg" alt="logo" className='w-[40.5px] h-[39px]' />
+        <img src="../Group 1.svg" alt="logo" className='w-[40.5px] h-[39px]' />
         <h1 className="text-[28px] leading-6 text-[#0F4880] logo font-semibold ">SpendNest</h1>
       </Link>
       <div className='mt-[100px] flex flex-col gap-4'>
@@ -61,7 +61,7 @@ export default function SideBar() {
       </div>
 
       <div className=" flex items-center bg-[#FBFDFF] rounded-2xl h-[80px] gap-2 justify-center relative w-[100%] top-[240px]">
-        <img src="./MetaMask - png 0.svg" alt="wallet logo" className='w-[36px] h-[36px] rounded' />
+        <img src="../MetaMask - png 0.svg" alt="wallet logo" className='w-[36px] h-[36px] rounded' />
         <p className="text-[17px] leading-6 font-normal tracking-[0.5%] text-[#0F4880] head1">194XV7C......ROFYOF</p>
       </div>
         </section>
