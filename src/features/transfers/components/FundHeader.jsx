@@ -1,12 +1,12 @@
 /** @format */
 import { useRouter } from 'next/navigation'
-import {PiArrowLeftBold} from 'react-icons/pi'
+import { PiArrowLeftBold } from 'react-icons/pi'
 
 export default function FundHeader() {
-        const router = useRouter()
+  const router = useRouter()
   return (
     <div>
-      <div className="flex gap-4 items-center mt-16 ">
+      <div className="flex gap-4 items-center pt-16 ">
         <PiArrowLeftBold
           size={24}
           className="font-bold cursor-pointer"
