@@ -1,23 +1,12 @@
-
 "use client"
-
-import TokenTransfer from './TokenTransfer'
 import FundHeader from './FundHeader'
-
-
-
- 
-
-export default function SendFund() {
-      
+import BetweenAccTransferForm from './BetweenAccTransferForm'
+export default function BetweenHome() {
   return (
     <main>
         <FundHeader/>
-
-
-        {/* Token Transfer */}
         <div className="mt-[76px]">
-                <TokenTransfer/>
+                <BetweenAccTransferForm/>
         </div>
     </main>
   )

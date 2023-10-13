@@ -33,7 +33,7 @@ export default function FundTransfer() {
           </div>
           </div>
         </Link>
-        <Link href="" className="w-[49%] funda_bg rounded-2xl cursor-pointer">
+        <Link href="/transfers/betweenacct" className="w-[49%] funda_bg rounded-2xl cursor-pointer">
           <div className="w-[90%] mx-auto py-3 flex justify-between items-center">
         <div className="">
 
