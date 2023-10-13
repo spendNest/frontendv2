@@ -1,12 +1,11 @@
 import React from 'react'
-import TransfersFeatures from '../../features/transfers/TransfersFeatures'
 import Layout from '@/components/Layout'
+import SendFundBetweenAcc from '@/features/transfers/sendFundBetweenAcc'
 
 export default function page() {
   return (
     <Layout>
-
-      <TransfersFeatures/>
+        <SendFundBetweenAcc/>
     </Layout>
   )
 }
