@@ -4,6 +4,7 @@ import Auth from "@/app/auth/Auth";
 import React from "react";
 import copy from "copy-to-clipboard";
 import { toast } from "react-toastify";
+import Link from "next/link";
 
 export default function FundTransfer() {
         const {address} =Auth();
@@ -20,7 +21,7 @@ export default function FundTransfer() {
   return (
     <main>
       <section className="flex justify-between mt-20 ">
-        <div onClick={copyToClipboard} className="w-[49%] funda_bg rounded-2xl cursor-pointer">
+        <Link href="/transfers/sendfund" className="w-[49%] funda_bg rounded-2xl cursor-pointer">
           <div className="w-[90%] mx-auto py-3 flex justify-between items-center">
         <div  className="">
 
@@ -31,8 +32,8 @@ export default function FundTransfer() {
                 <img src="./Transfer.png" alt="" className="w-[48px] h-[48px]"/>
           </div>
           </div>
-        </div>
-        <div className="w-[49%] funda_bg rounded-2xl">
+        </Link>
+        <Link href="" className="w-[49%] funda_bg rounded-2xl cursor-pointer">
           <div className="w-[90%] mx-auto py-3 flex justify-between items-center">
         <div className="">
 
@@ -43,7 +44,8 @@ export default function FundTransfer() {
                 <img src="./Transfer.png" alt="" className="w-[48px] h-[48px]"/>
           </div>
           </div>
-        </div>
+        </Link>
+     
       </section>
     </main>
   );
