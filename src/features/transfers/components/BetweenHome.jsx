@@ -4,10 +4,10 @@ import BetweenAccTransferForm from './BetweenAccTransferForm'
 export default function BetweenHome() {
   return (
     <main>
-        <FundHeader/>
-        <div className="mt-[76px]">
-                <BetweenAccTransferForm/>
-        </div>
+      <FundHeader />
+      <div className="mt-[76px]">
+        <BetweenAccTransferForm />
+      </div>
     </main>
   )
 }
