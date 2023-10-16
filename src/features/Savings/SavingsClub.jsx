@@ -1,7 +1,7 @@
 import Layout from '@/components/Layout'
 import Image from 'next/image'
 import React, { useState } from 'react'
-import { PiArrowLeftBold } from 'react-icons/pi'
+import { PiArrowLeftBold, PiArrowRightBold } from 'react-icons/pi'
 import { useRouter } from 'next/navigation'
 import { clubs } from '@/utils'
 import Link from 'next/link'
@@ -83,28 +83,28 @@ export default function SavingsClub() {
           </div>
         </div>
 
-        {/* <div className="flex justify-center w-[50%] mx-auto">
+        <div className="flex justify-center w-[50%] mx-auto">
           <div className='text-black grid mt-1 w-full'>
-            <span onClick={() => setSavingLive(true)} className='font-bold text-lg pb-1 hover:cursor-pointer block text-center'>Live</span>
+            <span className='font-bold text-lg pb-1 hover:cursor-pointer block text-center'>Live</span>
             <div className="w-full bg-[#D9D9D9] h-[3px]">
               <div
                 className="h-full bg-[#0F4880]"
                 role="progressbar"
-                style={{ width: `${savingLive ? 100 : 0}%` }}
+                style={{ width: `100%` }}
               ></div>
             </div>
           </div>
           <div className='text-black grid mt-1 w-full'>
-            <span onClick={() => setSavingLive(false)} className='font-bold text-lg pb-1 hover:cursor-pointer block text-center'>Completed</span>
+            <span className='font-bold text-lg pb-1 hover:cursor-pointer block text-center'>Completed</span>
             <div className="w-full bg-[#D9D9D9] h-[3px]">
               <div
                 className="h-full bg-[#0F4880]"
                 role="progressbar"
-                style={{ width: `${savingLive ? 0 : 100}%` }}
+                style={{ width: `0%` }}
               ></div>
             </div>
           </div>
-        </div> */}
+        </div>
 
         <div className='mt-8 block text-center'>
           {!savingLive ?
@@ -116,6 +116,14 @@ export default function SavingsClub() {
               You have <span className='font-bold'>No Ongoing</span> savings
             </span>
           }
+        </div>
+
+        <div className='flex justify-center items-center text-[#0F4880] gap-6'>
+          <span className='tracking-[0.08px] text-lg grotesk_font'>Create a Savings Club</span>
+          <PiArrowRightBold
+            size={24}
+            className="font-bold cursor-pointer mt-2"
+          />
         </div>
       </div>
     </Layout>
