@@ -53,7 +53,7 @@ export default function HomeFeatures() {
 
               <div className='flex justify-between gap-8 w-full'>
                 {[1, 2].map((i, j) => (
-                  <div className='mt-8 sm:mt-10 p-4 transaction-card w-full'>
+                  <div key={j} className='mt-8 sm:mt-10 p-4 transaction-card w-full'>
                     <div className='w-full min-w-[305px]'>
                       <div className='flex items-center justify-between w-full text-base text-[#696969] grotesk_font gap-2'>
                         <span>16th October</span>

@@ -43,5 +43,27 @@ export const glasses = [
     link: "/lock_account"
   },
 ]
+export const clubs = [
+  {
+    name: "Holiday in UK",
+    imagePath: "/savings/dollar_coins.svg",
+    bg_col: "rgba(143, 231, 108, 0.50)",
+    members: 102
+  },
+  {
+    name: "Rent",
+    imagePath: "/savings/hand_sack.svg",
+    bg_col: "rgba(224, 207, 186, 0.50)",
+
+    members: 65
+  },
+  {
+    name: "New Business",
+    imagePath: "/savings/wallet_saving.svg",
+    bg_col: "rgba(150, 149, 236, 0.50)",
+
+    members: 198
+  },
+]
 
 export const coins = ["/usdt.svg", "/ethereum.svg", "/bitcoin.svg"]

@@ -75,6 +75,18 @@ main {
   background: linear-gradient(180deg, #69B5FF 0%, #D2E9FF 100%);
 }
 
+.personal_savings_card {
+  border-radius: 8px;
+  border: 1px solid #2A0FB1;
+  background: var(--Light, #FEFEFE);
+}
+
+.savings_club {
+  border-radius: 8px;
+  border: 1px solid #C27810;
+  background: var(--Light, #FEFEFE);
+}
+
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;

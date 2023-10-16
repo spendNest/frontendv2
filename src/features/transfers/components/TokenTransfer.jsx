@@ -22,7 +22,6 @@ export default function TokenTransfer({ btnText, type }) {
         </div>
         {/* button */}
         <div className="flex justify-center">
-
           <button className="w-[360px] h-[58px] rounded-lg bg-[#0F4880] text-[#FEFEFE] text-[17px] leading-[25.5px] tracking-[0.5%] mt-[80px] ">
             {btnText}
           </button>
