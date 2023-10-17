@@ -1,6 +1,6 @@
 import Layout from '@/components/Layout'
 import Image from 'next/image'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { PiArrowLeftBold, PiArrowRightBold } from 'react-icons/pi'
 import { useRouter } from 'next/navigation'
 import { clubs } from '@/utils'
@@ -8,8 +8,7 @@ import Link from 'next/link'
 
 export default function SavingsClub() {
   const router = useRouter()
-  const [savingLive, setSavingLive] = useState(true)
-  console.log(savingLive)
+  // const [savingLive, setSavingLive] = useState(true)
 
   return (
     <Layout>
@@ -82,7 +81,7 @@ export default function SavingsClub() {
             ))}
           </div>
         </div>
-
+        {/* 
         <div className="flex justify-center w-[50%] mx-auto">
           <div className='text-black grid mt-1 w-full'>
             <span className='font-bold text-lg pb-1 hover:cursor-pointer block text-center'>Live</span>
@@ -104,9 +103,9 @@ export default function SavingsClub() {
               ></div>
             </div>
           </div>
-        </div>
+        </div> */}
 
-        <div className='mt-8 block text-center'>
+        {/* <div className='mt-8 block text-center'>
           {!savingLive ?
             <span className='w-full md:w-[100px]'>
               You have <span className='font-bold'>Not Completed</span> any savings club yet. It will show here once you are done
@@ -116,13 +115,14 @@ export default function SavingsClub() {
               You have <span className='font-bold'>No Ongoing</span> savings
             </span>
           }
-        </div>
+        </div> */}
 
-        <div className='flex justify-center items-center text-[#0F4880] gap-6'>
+        <div className='flex justify-center items-center text-[#0F4880] gap-2 mt-4'>
           <span className='tracking-[0.08px] text-lg grotesk_font'>Create a Savings Club</span>
           <PiArrowRightBold
             size={24}
-            className="font-bold cursor-pointer mt-2"
+            className="font-bold hover:cursor-pointer"
+            onClick={() => router.push('/savings/club/create_savings')}
           />
         </div>
       </div>

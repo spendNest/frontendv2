@@ -1,12 +1,12 @@
 "use client"
 import React from 'react'
-import SavingsClub from '@/features/Savings/SavingsClub'
+import CreateSavings from '@/features/Savings/CreateSavings'
 import '@/pages/globals.css'
 
 const Page = () => {
   return (
-    <SavingsClub />
+    <CreateSavings />
   )
 }
 
-export default Page;
+export default Page
