@@ -1,8 +1,9 @@
 import React from 'react'
+import Layout from '@/components/Layout'
 
 const CreateSavings = () => {
   return (
-    <div>CreateSavings</div>
+    <Layout>CreateSavings</Layout>
   )
 }
 

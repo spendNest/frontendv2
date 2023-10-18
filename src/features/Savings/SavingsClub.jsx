@@ -3,12 +3,11 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { PiArrowLeftBold, PiArrowRightBold } from 'react-icons/pi'
 import { useRouter } from 'next/navigation'
-import { clubs } from '@/utils'
 import Link from 'next/link'
 
 export default function SavingsClub() {
   const router = useRouter()
-  // const [savingLive, setSavingLive] = useState(true)
+  const [savingLive, setSavingLive] = useState(true)
 
   return (
     <Layout>
@@ -51,37 +50,89 @@ export default function SavingsClub() {
             </Link>
           </div>
           <div className="flex flex-wrap justify-center gap-10 mt-8 text-white">
-            {clubs.map((card, index) => (
-              <div key={index} className='w-full rounded-[8px] border-t md:max-w-[300px]' >
-                <div className='w-full h-[180px] flex justify-center' style={{ backgroundColor: card.bg_col }} >
-                  <Image
-                    src={card?.imagePath}
-                    alt={""}
-                    className="w-full"
-                    width={120}
-                    height={120}
-                  />
-                </div>
 
-                <div className='text-black grid mt-1'>
-                  <span className='font-bold text-lg'>{card.name}</span>
-                  <div className="w-full bg-[#D9D9D9] h-[3px]">
-                    <div
-                      className="h-full bg-[#0F4880]"
-                      role="progressbar"
-                      style={{ width: `${10}%` }}
-                    ></div>
-                  </div>
-                  <div className='space-x-2'>
-                    <span className='text-[14px] font-bold'>{card.members}</span>
-                    <span className='text-[12px]'>members</span>
-                  </div>
+            <div className='w-full rounded-[8px] border-t md:max-w-[300px]' >
+              <div className='w-full h-[180px] flex justify-center' style={{ backgroundColor: "rgba(143, 231, 108, 0.50)" }} >
+                <Image
+                  src="/savings/dollar_coins.svg"
+                  alt={""}
+                  className="w-full"
+                  width={120}
+                  height={120}
+                />
+              </div>
+
+              <div className='text-black grid mt-1'>
+                <span className='font-bold text-lg'>Holiday in UK</span>
+                <div className="w-full bg-[#D9D9D9] h-[3px]">
+                  <div
+                    className="h-full bg-[#0F4880]"
+                    role="progressbar"
+                    style={{ width: `${10}%` }}
+                  ></div>
+                </div>
+                <div className='space-x-2'>
+                  <span className='text-[14px] font-bold'>120</span>
+                  <span className='text-[12px]'>members</span>
                 </div>
               </div>
-            ))}
+            </div>
+            <div className='w-full rounded-[8px] border-t md:max-w-[300px]' >
+              <div className='w-full h-[180px] flex justify-center' style={{ backgroundColor: "rgba(224, 207, 186, 0.50)" }} >
+                <Image
+                  src="/savings/hand_sack.svg"
+                  alt={""}
+                  className="w-full"
+                  width={120}
+                  height={120}
+                />
+              </div>
+
+              <div className='text-black grid mt-1'>
+                <span className='font-bold text-lg'>Rent</span>
+                <div className="w-full bg-[#D9D9D9] h-[3px]">
+                  <div
+                    className="h-full bg-[#0F4880]"
+                    role="progressbar"
+                    style={{ width: `${30}%` }}
+                  ></div>
+                </div>
+                <div className='space-x-2'>
+                  <span className='text-[14px] font-bold'>50</span>
+                  <span className='text-[12px]'>members</span>
+                </div>
+              </div>
+            </div>
+            <div className='w-full rounded-[8px] border-t md:max-w-[300px]' >
+              <div className='w-full h-[180px] flex justify-center' style={{ backgroundColor: "rgba(150, 149, 236, 0.50)" }} >
+                <Image
+                  src="/savings/wallet_saving.svg"
+                  alt={""}
+                  className="w-full"
+                  width={120}
+                  height={120}
+                />
+              </div>
+
+              <div className='text-black grid mt-1'>
+                <span className='font-bold text-lg'>New Business</span>
+                <div className="w-full bg-[#D9D9D9] h-[3px]">
+                  <div
+                    className="h-full bg-[#0F4880]"
+                    role="progressbar"
+                    style={{ width: `${60}%` }}
+                  ></div>
+                </div>
+                <div className='space-x-2'>
+                  <span className='text-[14px] font-bold'>40</span>
+                  <span className='text-[12px]'>members</span>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
-        {/* 
+
         <div className="flex justify-center w-[50%] mx-auto">
           <div className='text-black grid mt-1 w-full'>
             <span className='font-bold text-lg pb-1 hover:cursor-pointer block text-center'>Live</span>
@@ -89,7 +140,7 @@ export default function SavingsClub() {
               <div
                 className="h-full bg-[#0F4880]"
                 role="progressbar"
-                style={{ width: `100%` }}
+                style={{ width: `${savingLive ? "100%" : "0%"}` }}
               ></div>
             </div>
           </div>
@@ -99,13 +150,13 @@ export default function SavingsClub() {
               <div
                 className="h-full bg-[#0F4880]"
                 role="progressbar"
-                style={{ width: `0%` }}
+                style={{ width: `${!savingLive ? "100%" : "0%"}` }}
               ></div>
             </div>
           </div>
-        </div> */}
+        </div>
 
-        {/* <div className='mt-8 block text-center'>
+        <div className='mt-8 block text-center'>
           {!savingLive ?
             <span className='w-full md:w-[100px]'>
               You have <span className='font-bold'>Not Completed</span> any savings club yet. It will show here once you are done
@@ -115,7 +166,7 @@ export default function SavingsClub() {
               You have <span className='font-bold'>No Ongoing</span> savings
             </span>
           }
-        </div> */}
+        </div>
 
         <div className='flex justify-center items-center text-[#0F4880] gap-2 mt-4'>
           <span className='tracking-[0.08px] text-lg grotesk_font'>Create a Savings Club</span>
