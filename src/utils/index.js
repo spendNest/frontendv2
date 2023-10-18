@@ -67,3 +67,24 @@ export const clubs = [
 ]
 
 export const coins = ["/usdt.svg", "/ethereum.svg", "/bitcoin.svg"]
+
+export const generateQuarterlyDates = () => {
+  const newArray = [];
+  const startDate = new Date(); // Get the current date
+  startDate.setMonth(0); // Set the starting month to January (0-indexed)
+  startDate.setDate(1); // Set the starting day to the 1st
+
+  for (let i = 0; i < 8; i++) { // Generate dates for the next 8 quarters (2 years)
+    const year = startDate.getFullYear();
+    const month = startDate.getMonth();
+    const quarterStartMonth = month - (month % 3);
+    const quarterEndMonth = quarterStartMonth + 2;
+
+    const quarterEndDate = new Date(year, quarterEndMonth + 1, 0); // Get the last day of the quarter
+
+    const formattedDate = `31st ${new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(quarterEndDate)}`;
+    newArray.push(formattedDate);
+    startDate.setMonth(quarterStartMonth + 3); // Move to the next quarter
+  }
+  return newArray;
+}

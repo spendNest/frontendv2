@@ -36,8 +36,8 @@ export default function PersonalSavings() {
             <span className='text-[#2A0FB1] text-xl font-bold'>$65.80</span>
           </div>
           <div className="personal_savings_card p-6 flex flex-col justify-between w-full md:w-[50%]">
-            <span className='grotesk_font text-[base] tracking-[0.085px] leading-5'>Flexible savings for emergencies, Free transfers, withdrawals.</span>
-            <span className='grotesk_font text-[base] tracking-[0.085px] leading-5'>You can add money from your basic account to this wallet instantly.</span>
+            <span className='text-base tracking-[0.085px] leading-5'>Flexible savings for emergencies, Free transfers, withdrawals.</span>
+            <span className='grotesk_font text-base tracking-[0.085px] leading-5'>You can add money from your basic account to this wallet instantly.</span>
           </div>
         </div>
 
