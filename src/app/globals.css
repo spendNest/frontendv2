@@ -20,7 +20,7 @@ main {
   margin: 0;
   box-sizing: border-box;
   font-family: 'Space Mono', monospace;
-  background-color: #fefefe;
+  background-color: #fefefe !important;
 }
 
 .geostar_font {
