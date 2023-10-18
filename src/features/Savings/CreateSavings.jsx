@@ -63,16 +63,16 @@ const CreateSavings = () => {
               <label>Primary Source of Funds</label>
               <select className="select select-bordered w-full max-w-full bg-white">
                 <option disabled selected>Select Option?</option>
-                <option>Han Solo</option>
-                <option>Greedo</option>
+                <option>SpendNest Basic Account</option>
+                <option>External Wallet</option>
               </select>
             </div>
             <div className='grid space-y-2 w-full'>
               <label>Who can add members</label>
               <select className="select select-bordered w-full max-w-full bg-white">
                 <option disabled selected>Select Option?</option>
-                <option>Han Solo</option>
-                <option>Greedo</option>
+                <option>Admin</option>
+                <option>Any member of the savings club</option>
               </select>
             </div>
           </div>
