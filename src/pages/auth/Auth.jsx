@@ -7,7 +7,7 @@ import {
   SupportedNetworks,
   ComethProvider,
 } from "@cometh/connect-sdk";
-import { AppContext } from "./Context";
+import { useAppContext } from "./Context";
 
 export default function Auth() {
   const {
@@ -21,7 +21,8 @@ export default function Auth() {
     setIsLoading,
     isConnected,
     setIsConnected,
-  } = useContext(AppContext);
+  } = useAppContext();
+  console.log(wallet)
 
   const apiKey = "15511501-2129-4f96-857a-762009df1f07";
   const walletAdaptor = new ConnectAdaptor({

@@ -8,7 +8,11 @@ export default function HomeFeatures() {
   return (
 
     <Layout>
+<<<<<<< HEAD
       <div className='pt-16 pb-5'>
+=======
+      <div className='pt-20 pb-5'>
+>>>>>>> 35c6848a9143ee2941a54358ae938c4080aecf64
         <div className='md:flex'>
           <div>
             <div className="flex flex-wrap justify-center gap-10 text-white">
@@ -45,15 +49,26 @@ export default function HomeFeatures() {
             <div className='mt-8 sm:my-10'>
               <div className='flex justify-between items-center'>
                 <span className='font-bold text-lg'>Transaction History</span>
+<<<<<<< HEAD
                 <div className='flex items-center text-base text-[#696969] grotesk_font gap-1'>
                   <span>See more</span>
                   <span className=''>&#62;</span>
                 </div>
+=======
+                <Link href="/history" className='flex items-center text-base text-[#696969] grotesk_font gap-1'>
+                  <span>See more</span>
+                  <span className=''>&#62;</span>
+                </Link>
+>>>>>>> 35c6848a9143ee2941a54358ae938c4080aecf64
               </div>
 
               <div className='flex justify-between gap-8 w-full'>
                 {[1, 2].map((i, j) => (
+<<<<<<< HEAD
                   <div className='mt-8 sm:mt-10 p-4 transaction-card w-full'>
+=======
+                  <div key={j} className='mt-8 sm:mt-10 p-4 transaction-card w-full'>
+>>>>>>> 35c6848a9143ee2941a54358ae938c4080aecf64
                     <div className='w-full min-w-[305px]'>
                       <div className='flex items-center justify-between w-full text-base text-[#696969] grotesk_font gap-2'>
                         <span>16th October</span>

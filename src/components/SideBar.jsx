@@ -41,7 +41,11 @@ export default function SideBar() {
 
           <Link href="/home" className="w-[221px] pt-[60px] flex items-center gap-1 mx-auto">
             <img src="/Group 1.svg" alt="logo" className='w-[40.5px] h-[39px]' />
+<<<<<<< HEAD
             <h1 className="text-[28px] leading-6 text-[#0F4880] logo font-semibold ">SpendNest</h1>
+=======
+            <h1 className="text-[28px] leading-6 text-[#0F4880] orbitron_font font-semibold ">SpendNest</h1>
+>>>>>>> 35c6848a9143ee2941a54358ae938c4080aecf64
           </Link>
           <div className='mt-[100px] flex flex-col gap-4'>
             {
