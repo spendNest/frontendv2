@@ -4,26 +4,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono&display=swap');
 
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-<<<<<<< HEAD
-=======
 @import url('https://fonts.googleapis.com/css2?family=Geostar&family=Montserrat&family=Orbitron:wght@400;600&family=Space+Grotesk&family=Space+Mono&display=swap');
->>>>>>> 35c6848a9143ee2941a54358ae938c4080aecf64
 
 .mono {
   font-family: 'Space Mono', monospace;
 }
-<<<<<<< HEAD
 .funda_bg{
 
   background: linear-gradient(180deg, #69B5FF 0%, #D2E9FF 100%);
 
   
 
-=======
-
-.fund_bg {
-  background: linear-gradient(180deg, #69B5FF 0%, #D2E9FF 100%);
->>>>>>> 35c6848a9143ee2941a54358ae938c4080aecf64
 }
 
 .mono {
