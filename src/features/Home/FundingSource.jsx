@@ -46,7 +46,7 @@ const FundingSource = () => {
           <span className='font-bold text-lg'>Fund From</span>
           <div className='flex justify-between gap-8 w-full'>
             {[1, 2].map((i, j) => (
-              <div className='fund_from_card mt-6 p-4 w-full'>
+              <div key={j} className='fund_from_card mt-6 p-4 w-full'>
                 <div className='w-full flex items-center justify-between min-w-[305px]'>
                   <div>
                     <div className='items-center flex justify-center w-14 h-14 p-1 mb-6'>

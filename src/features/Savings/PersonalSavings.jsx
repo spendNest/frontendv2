@@ -73,7 +73,7 @@ export default function PersonalSavings() {
           <span className='font-bold text-lg'>Recent Activities</span>
 
           {[1, 2].map((i, j) => (
-            <div className='my-6 p-4 transaction-card w-full'>
+            <div key={j} className='my-6 p-4 transaction-card w-full'>
               <div className='w-full min-w-[305px]'>
                 <div className='flex items-center justify-between w-full text-base text-[#696969] grotesk_font gap-2'>
                   <span>16th October</span>
