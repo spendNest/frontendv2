@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Layout from '@/components/Layout'
 import { explore_cards, glasses } from '@/utils'
 import Link from 'next/link'
