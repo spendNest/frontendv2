@@ -17,10 +17,10 @@ export default function Layout({ children }) {
     </main >
 =======
     <AppProvider>
-      <main>
+      <main className='bg-white'>
         <section className="h-screen flex">
           <SideBar />
-          <div className="w-[100%] max-h-screen overflow-scrollable px-6">
+          <div className="w-[100%] min-h-screen overflow-y-scroll max-h-screen overflow-scrollable px-6">
             {children}
           </div>
         </section >
