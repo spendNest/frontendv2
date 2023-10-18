@@ -10,11 +10,13 @@ import { ethers } from 'ethers'
 
 export default function HomeFeatures() {
   const { childAddress, provider, createWallet, isLoading, isConnected } = Auth();
+  const [accountDetails, setAccountDetails] = useState([])
   const contract = new ethers.Contract(childAddress, childAbi, provider.getSigner());
 const readAccountDetails = async ()=>{
 
   const tx = await contract.viewAccount();
   console.log('account', tx);
+  setAccountDetails(tx);
 }
   useEffect(()=>{
     readAccountDetails();
