@@ -2,12 +2,16 @@
 import { useRouter } from 'next/navigation'
 import { PiArrowLeftBold } from 'react-icons/pi'
 
+<<<<<<< HEAD
+export default function FundHeader() {
+=======
 export default function FundHeader({ title, type }) {
   console.log(type)
+>>>>>>> 35c6848a9143ee2941a54358ae938c4080aecf64
   const router = useRouter()
   return (
     <div>
-      <div className="flex gap-4 items-center mt-16 ">
+      <div className="flex gap-4 items-center pt-16 ">
         <PiArrowLeftBold
           size={24}
           className={`font-bold cursor-pointer ${type === "home" ? "mt-2" : ""}`}

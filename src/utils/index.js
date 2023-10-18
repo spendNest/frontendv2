@@ -30,7 +30,11 @@ export const glasses = [
   {
     name: "Withdraw",
     imagePath: "/ri_funds-box-line.png",
+<<<<<<< HEAD
+    link: "/withdraw"
+=======
     link: "/home/withdraw"
+>>>>>>> 35c6848a9143ee2941a54358ae938c4080aecf64
   },
   {
     name: "Statement",
@@ -42,6 +46,9 @@ export const glasses = [
     imagePath: "/iconamoon_lock.svg",
     link: "/lock_account"
   },
+<<<<<<< HEAD
+]
+=======
 ]
 export const clubs = [
   {
@@ -88,3 +95,4 @@ export const generateQuarterlyDates = () => {
   }
   return newArray;
 }
+>>>>>>> 35c6848a9143ee2941a54358ae938c4080aecf64
