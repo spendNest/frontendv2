@@ -39,22 +39,15 @@ main {
   font-family: 'Grotesk', monospace;
 }
 
-<<<<<<< HEAD
-=======
 .orbitron_font {
   font-family: 'Orbitron', monospace;
 }
 
->>>>>>> 35c6848a9143ee2941a54358ae938c4080aecf64
 .mono_font {
   font-family: 'Space Mono', monospace;
 }
 
 .logo {
-<<<<<<< HEAD
-
-=======
->>>>>>> 35c6848a9143ee2941a54358ae938c4080aecf64
   font-family: 'Orbitron', sans-serif;
 }
 
@@ -81,8 +74,6 @@ main {
   background: linear-gradient(180deg, rgba(15, 72, 128, 0.30) 0%, rgba(210, 233, 255, 0.70) 100%);
 }
 
-<<<<<<< HEAD
-=======
 .fund_from_card {
   border-radius: 16px;
   background: linear-gradient(180deg, #69B5FF 0%, #D2E9FF 100%);
@@ -100,7 +91,6 @@ main {
   background: var(--Light, #FEFEFE);
 }
 
->>>>>>> 35c6848a9143ee2941a54358ae938c4080aecf64
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
