@@ -36,7 +36,7 @@ const readAccountDetails = async ()=>{
                   </Link>
                   <div className='text-white px-3'>
                     <span className='text-base block mb-1.5'>{card?.name}</span>
-                    <span className="sm:text-2xl grotesk font-bold leading-[25.5px] tracking-[0.085px] mt-4 mb-2 text-2xl">{card.balance}</span>
+                    <span className="sm:text-2xl grotesk font-bold leading-[25.5px] tracking-[0.085px] mt-4 mb-2 text-2xl">{card.balance} {Number(accountDetails[0])}</span>
                   </div>
                 </div>
               ))}
