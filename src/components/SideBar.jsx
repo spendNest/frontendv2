@@ -6,12 +6,12 @@ import { MdOutlineEnergySavingsLeaf } from 'react-icons/md'
 import { PiHandCoins } from 'react-icons/pi'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-
-
-
+import Auth from '@/app/auth/Auth'
 
 export default function SideBar() {
   const pathname = usePathname();
+  const { address } = Auth();
+  console.log(address)
   const menu = [
     {
       name: "Home",
@@ -61,7 +61,6 @@ export default function SideBar() {
           </div>
 
           <div className=" flex items-center bg-[#FBFDFF] rounded-2xl h-[80px] gap-2 justify-center relative w-[100%] top-[240px]">
-            <img src="/MetaMask - png 0.svg" alt="wallet logo" className='w-[36px] h-[36px] rounded' />
             <p className="text-[17px] leading-6 font-normal tracking-[0.5%] text-[#0F4880] head1">194XV7C......ROFYOF</p>
           </div>
         </section>

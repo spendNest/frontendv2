@@ -30,7 +30,7 @@ export default function Home() {
             </p>
             <div className="flex justify-center mt-8">
 
-              <button onClick={createWallet} className='font-bold text-[17px] text-white leading-6 tracking-[1.5%] py-[8px] px-[16px] bg-[#0F4880] rounded-lg' disabled={isLoading}>{!isLoading ? "Connect" : "Connecting"}</button>
+              <button onClick={createWallet} className={`font-bold text-[17px] text-white leading-6 tracking-[1.5%] py-[8px] px-[16px] bg-[#0F4880] rounded-lg`} disabled={isLoading}>{!isLoading ? "Connect" : "Connecting"}</button>
             </div>
           </div>
         </div>
