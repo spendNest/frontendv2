@@ -11,7 +11,7 @@ import Auth from '@/app/auth/Auth'
 export default function SideBar() {
   const pathname = usePathname();
   const { address } = Auth();
-  console.log(address)
+
   const menu = [
     {
       name: "Home",
