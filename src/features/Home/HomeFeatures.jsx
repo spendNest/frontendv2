@@ -11,7 +11,7 @@ import { ethers } from 'ethers'
 export default function HomeFeatures() {
   const { childAddress, provider, createWallet, isLoading, isConnected } = Auth();
   const [accountDetails, setAccountDetails] = useState([])
-  console.log('is', isConnected)
+  console.log('is', childAddress)
   const contract = new ethers.Contract(childAddress, childAbi, provider?.getSigner());
   const readAccountDetails = async ()=>{
     const tx = await contract.viewAccount();
@@ -25,8 +25,7 @@ export default function HomeFeatures() {
     if(Object.values(provider).length > 0 || provider !== undefined || provider !== null ){
       
       readAccountDetails();
-     
-      // return readAccountDetails;
+  
     }
   },[provider])
 

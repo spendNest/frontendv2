@@ -5,9 +5,10 @@ import { toast } from "react-toastify";
 import Auth from "@/app/auth/Auth";
 import copy from "copy-to-clipboard";
 import { useRouter } from 'next/navigation';
+import { useAppContext } from '@/app/auth/Context';
 
 const WalletId = ({ type }) => {
-  const { childAddress, disconnect, isConnected } = Auth();
+  const { childAddress, disconnect, isConnected } = useAppContext();
   const [copied, setCopied] = useState(false)
   const router = useRouter()
 
@@ -15,6 +16,7 @@ const WalletId = ({ type }) => {
     // disconnect
 
 console.log('cc', isConnected)
+console.log('childAddress', childAddress)
  
   const copyToClipboard = () => {
     let copyText = childAddress;
