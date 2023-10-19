@@ -12,11 +12,11 @@ export default function HomeFeatures() {
   const { childAddress, provider, createWallet, isLoading, isConnected } = Auth();
   const [accountDetails, setAccountDetails] = useState([])
  
-
+// console.log('pro', provider.ComethProvider)
  
   useEffect(()=>{
-    if(Object.values(provider).length >0 || provider !== undefined || provider !== null ){
-      const contract = new ethers.Contract(childAddress, childAbi, provider.getSigner());
+    if(Object.values(provider).length > 0 || provider !== undefined || provider !== null ){
+      const contract = new ethers.Contract(childAddress, childAbi, provider?.getSigner());
 
       const readAccountDetails = async ()=>{
         const tx = await contract.viewAccount();
