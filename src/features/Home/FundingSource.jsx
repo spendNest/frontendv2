@@ -1,32 +1,19 @@
-<<<<<<< HEAD
-"use client"
-import { useRouter } from 'next/navigation'
-=======
->>>>>>> 35c6848a9143ee2941a54358ae938c4080aecf64
 import React from 'react'
 import Layout from '@/components/Layout'
 import WalletId from "@/components/WalletId"
 import { PiArrowLeftBold } from 'react-icons/pi'
-<<<<<<< HEAD
-=======
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 
->>>>>>> 35c6848a9143ee2941a54358ae938c4080aecf64
 
 const FundingSource = () => {
   const router = useRouter()
 
   return (
     <Layout>
-<<<<<<< HEAD
-      <div className='pt-16 pb-5'>
-        <div className='flex gap-6 w-'>
-=======
       <div className='pt-20 pb-5'>
         <div className='flex gap-6'>
->>>>>>> 35c6848a9143ee2941a54358ae938c4080aecf64
           <PiArrowLeftBold
             size={24}
             className="font-bold cursor-pointer mt-2"
@@ -39,8 +26,6 @@ const FundingSource = () => {
         </div>
 
         <WalletId type="fund" />
-<<<<<<< HEAD
-=======
 
         <div className='mt-8 sm:mt-20 mb-10'>
           <span className='font-bold text-lg'>Fund From</span>
@@ -76,7 +61,6 @@ const FundingSource = () => {
             ))}
           </div>
         </div>
->>>>>>> 35c6848a9143ee2941a54358ae938c4080aecf64
       </div>
     </Layout>
   )
