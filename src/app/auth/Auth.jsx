@@ -67,6 +67,7 @@ export default function Auth() {
         const tx = await FactoryContract._returnAddress(instance.getAddress());
         setChildAddress(tx);
         console.log("tx", tx);
+        
         // const txResponse = await tx.wait();
         // console.log('response',txResponse);
         // setProvider(instanceProvider);

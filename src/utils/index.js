@@ -30,7 +30,7 @@ export const glasses = [
   {
     name: "Account Details",
     imagePath: "/mdi_account-details-outline.svg",
-    link: "/home/account_details"
+    link: "/home/account_info"
   },
   {
     name: "Fund Account",

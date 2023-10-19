@@ -1,9 +1,18 @@
 "use client"
-import React from 'react'
+import React, { useEffect } from 'react'
 import SideBar from './SideBar'
 import AppProvider from '@/app/auth/Context'
+import Auth from '@/app/auth/Auth'
+import { useRouter } from 'next/navigation'
 
 export default function Layout({ children }) {
+  const {isConnected} = Auth();
+  const router = useRouter()
+  useEffect(()=>{
+if(!isConnected){
+  router.push('/');
+}
+  })
   return (
     <AppProvider>
       <main className='bg-white'>
