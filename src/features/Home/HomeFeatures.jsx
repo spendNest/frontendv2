@@ -1,29 +1,42 @@
-import React from 'react'
+"use client"
+import React, { useEffect, useState } from 'react'
 import Layout from '@/components/Layout'
 import { explore_cards, glasses } from '@/utils'
 import Link from 'next/link'
 import Image from 'next/image'
+import Auth from '@/app/auth/Auth'
+import childAbi from '@/app/auth/abi/child.json'
+import { ethers } from 'ethers'
 
 export default function HomeFeatures() {
+  const { childAddress, provider, createWallet, isLoading, isConnected } = Auth();
+  const [accountDetails, setAccountDetails] = useState([])
+  const contract = new ethers.Contract(childAddress, childAbi, provider.getSigner());
+const readAccountDetails = async ()=>{
+
+  const tx = await contract.viewAccount();
+  console.log('account', tx);
+  setAccountDetails(tx);
+}
+  useEffect(()=>{
+    readAccountDetails();
+  })
+
   return (
 
     <Layout>
-<<<<<<< HEAD
-      <div className='pt-16 pb-5'>
-=======
       <div className='pt-20 pb-5'>
->>>>>>> 35c6848a9143ee2941a54358ae938c4080aecf64
         <div className='md:flex'>
           <div>
             <div className="flex flex-wrap justify-center gap-10 text-white">
               {explore_cards.map((card, index) => (
                 <div key={index} style={{ backgroundImage: `url(${card.bgCustom})` }} className="app_card_bg bg-no-repeat p-4 rounded-[8px] min-w-[305px] h-[200px] flex flex-col items-between justify-between grow">
                   <Link href={`/app?source=`} className="flex justify-end w-full py-1">
-                    <button className='bg-[#CDCFDE] py-1 px-4 rounded-lg text-[#0F4880] bg-white'>Explore &#8594;</button>
+                    <button className='bg-[#CDCFDE] py-1 px-4 rounded-lg text-[#0F4880]'>Explore &#8594;</button>
                   </Link>
                   <div className='text-white px-3'>
                     <span className='text-base block mb-1.5'>{card?.name}</span>
-                    <span className="sm:text-2xl grotesk font-bold leading-[25.5px] tracking-[0.085px] mt-4 mb-2 text-2xl">{card.balance}</span>
+                    <span className="sm:text-2xl grotesk font-bold leading-[25.5px] tracking-[0.085px] mt-4 mb-2 text-2xl">{card.balance} {Number(accountDetails[0])}</span>
                   </div>
                 </div>
               ))}
@@ -32,7 +45,7 @@ export default function HomeFeatures() {
             {/* Slider Details */}
             <div className="flex scrollbar-hide overflow-x-scroll glass_bg sm:bg-transparent overflow-y-hidden gap-2 flex-nowrap items-en justify-between mt-8 sm:mt-10">
               {glasses?.map((glass, index) => (
-                <Link href={glass.link} key={index} className="class flex justify-center items-center w-full gap-2 rounded-[24px] border py-2 px-1 w-fit text-base hover:cursor-pointer">
+                <Link href={glass.link} key={index} className="class flex justify-center items-center w-full gap-2 rounded-[24px] border py-2 px-1 text-base hover:cursor-pointer">
                   {glass.name}
                   <Image
                     src={glass.imagePath}
@@ -49,26 +62,15 @@ export default function HomeFeatures() {
             <div className='mt-8 sm:my-10'>
               <div className='flex justify-between items-center'>
                 <span className='font-bold text-lg'>Transaction History</span>
-<<<<<<< HEAD
-                <div className='flex items-center text-base text-[#696969] grotesk_font gap-1'>
-                  <span>See more</span>
-                  <span className=''>&#62;</span>
-                </div>
-=======
                 <Link href="/history" className='flex items-center text-base text-[#696969] grotesk_font gap-1'>
                   <span>See more</span>
                   <span className=''>&#62;</span>
                 </Link>
->>>>>>> 35c6848a9143ee2941a54358ae938c4080aecf64
               </div>
 
               <div className='flex justify-between gap-8 w-full'>
                 {[1, 2].map((i, j) => (
-<<<<<<< HEAD
-                  <div className='mt-8 sm:mt-10 p-4 transaction-card w-full'>
-=======
                   <div key={j} className='mt-8 sm:mt-10 p-4 transaction-card w-full'>
->>>>>>> 35c6848a9143ee2941a54358ae938c4080aecf64
                     <div className='w-full min-w-[305px]'>
                       <div className='flex items-center justify-between w-full text-base text-[#696969] grotesk_font gap-2'>
                         <span>16th October</span>
@@ -77,7 +79,7 @@ export default function HomeFeatures() {
 
                       <div className='flex'>
                         <div className='flex items-center w-full gap-4 mt-8'>
-                          <div className='border border-2 border-[#696969] rounded-full items-center flex justify-center w-10 h-10 p-1'>
+                          <div className=' border-2 border-[#696969] rounded-full items-center flex justify-center w-10 h-10 p-1'>
                             <Image
                               src="/circle_next.svg"
                               alt={""}

@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-import Image from 'next/image'
-import React from 'react'
-
-const WalletId = ({ type }) => {
-  return (
-    <div>
-      <div className='mt-8 sm:mt-20 mb-10'>
-=======
 "use client"
 import Image from 'next/image'
 import React, { useState } from 'react'
@@ -33,7 +24,6 @@ const WalletId = ({ type }) => {
   return (
     <div>
       <div className='mt-8 sm:mt-20 mb-6'>
->>>>>>> 35c6848a9143ee2941a54358ae938c4080aecf64
         <span className='font-bold text-lg'>Account Information</span>
       </div>
 
@@ -44,13 +34,8 @@ const WalletId = ({ type }) => {
         </div>
 
         {type === "fund" ?
-<<<<<<< HEAD
-          <button className='px-4 h-fit py-1 rounded-2xl flex items-center gap-1 text-[#0F4880] bg-white'>
-            Copy
-=======
           <button onClick={copyToClipboard} className='px-4 h-fit py-1 rounded-2xl flex items-center gap-1 text-[#0F4880] bg-white'>
             {copied ? "Copied" : "Copy"}
->>>>>>> 35c6848a9143ee2941a54358ae938c4080aecf64
             <Image
               src="/solar_copy-linear.svg"
               alt={""}

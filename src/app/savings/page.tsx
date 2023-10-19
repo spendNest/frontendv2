@@ -1,6 +1,6 @@
 import React from 'react'
 import SavingsFeatures from '@/features/Savings/SavingsFeatures'
-import '@/pages/globals.css'
+import '@/app/globals.css'
 
 export default function page() {
   return (
