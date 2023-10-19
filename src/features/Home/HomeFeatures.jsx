@@ -11,20 +11,22 @@ import { ethers } from 'ethers'
 export default function HomeFeatures() {
   const { childAddress, provider, createWallet, isLoading, isConnected } = Auth();
   const [accountDetails, setAccountDetails] = useState([])
- 
+
+  const contract = new ethers.Contract(childAddress, childAbi, provider?.getSigner());
+  const readAccountDetails = async ()=>{
+    const tx = await contract.viewAccount();
+    console.log('account', tx);
+    setAccountDetails(tx);
+  }
+
 // console.log('pro', provider.ComethProvider)
  
   useEffect(()=>{
     if(Object.values(provider).length > 0 || provider !== undefined || provider !== null ){
-      const contract = new ethers.Contract(childAddress, childAbi, provider?.getSigner());
-
-      const readAccountDetails = async ()=>{
-        const tx = await contract.viewAccount();
-        console.log('account', tx);
-        setAccountDetails(tx);
-      }
-      // return readAccountDetails;
+      
       readAccountDetails();
+     
+      // return readAccountDetails;
     }
   },[provider])
 
@@ -34,15 +36,15 @@ export default function HomeFeatures() {
       <div className='pt-20 pb-5'>
         <div className='md:flex'>
           <div>
-            <div className="flex flex-wrap justify-center gap-10 text-white">
+            <div className="flex flex-wrap gap-10 text-white">
               {explore_cards.map((card, index) => (
-                <div key={index} style={{ backgroundImage: `url(${card.bgCustom})` }} className="app_card_bg bg-no-repeat p-4 rounded-[8px] min-w-[305px] h-[200px] flex flex-col items-between justify-between grow">
-                  <Link href={`/app?source=`} className="flex justify-end w-full py-1">
+                <div key={index} style={{ backgroundImage: `url(${card.bgCustom})` }} className=" bg-no-repeat p-4 rounded-[8px] min-w-[305px] h-[200px] flex flex-col items-between justify-between ">
+                  <Link href={`/app?source=`} className="flex justify-end py-1">
                     <button className='bg-[#CDCFDE] py-1 px-4 rounded-lg text-[#0F4880]'>Explore &#8594;</button>
                   </Link>
                   <div className='text-white px-3'>
                     <span className='text-base block mb-1.5'>{card?.name}</span>
-                    <span className="sm:text-2xl grotesk font-bold leading-[25.5px] tracking-[0.085px] mt-4 mb-2 text-2xl">{card.balance} {Number(accountDetails[0])}</span>
+                    <span className="sm:text-2xl grotesk font-bold leading-[25.5px] tracking-[0.085px] mt-4 mb-2 text-2xl"> {card.name != "Number of Clubs" && "$"}{Number(accountDetails[index])}</span>
                   </div>
                 </div>
               ))}
