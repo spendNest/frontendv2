@@ -13,11 +13,8 @@ const WalletId = ({ type }) => {
   const router = useRouter()
 
 
-    // disconnect
+  // disconnect
 
-console.log('cc', isConnected)
-console.log('childAddress', childAddress)
- 
   const copyToClipboard = () => {
     let copyText = childAddress;
     let isCopy = copy(copyText);
@@ -30,11 +27,13 @@ console.log('childAddress', childAddress)
       setCopied(false);
     }, 5000);
   };
-  // useEffect(()=>{
-  //   if(isConnected == false){
-  //     router.push("/")
-  //   }
-  // }, [isConnected])
+
+  useEffect(() => {
+    if (isConnected == false) {
+      router.push("/")
+    }
+  }, [isConnected])
+
   return (
     <div>
       <div className='mt-8 sm:mt-20 mb-6'>
@@ -59,7 +58,7 @@ console.log('childAddress', childAddress)
             />
           </button>
           :
-          <button onClick={disconnect} className='px-4 h-fit py-2 rounded-xl flex items-center gap-1 text-[white] bg-[#0F4880]'>
+          <button onClick={() => disconnect()} className='px-4 h-fit py-2 rounded-xl flex items-center gap-1 text-[white] bg-[#0F4880]'>
             Disconnect Wallet
           </button>
         }

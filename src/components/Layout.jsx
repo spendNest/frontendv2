@@ -6,23 +6,21 @@ import Auth from '@/app/auth/Auth'
 import { useRouter } from 'next/navigation'
 
 export default function Layout({ children }) {
-  const {isConnected} = Auth();
+  const { isConnected } = Auth();
   const router = useRouter()
-  useEffect(()=>{
-if(!isConnected){
-  router.push('/');
-}
+  useEffect(() => {
+    if (!isConnected) {
+      router.push('/');
+    }
   })
   return (
-    <AppProvider>
-      <main className='bg-white'>
-        <section className="h-screen flex">
-          <SideBar />
-          <div className="w-[100%] min-h-screen overflow-y-scroll max-h-screen overflow-scrollable px-6">
-            {children}
-          </div>
-        </section >
-      </main >
-    </AppProvider>
+    <main className='bg-white'>
+      <section className="h-screen flex">
+        <SideBar />
+        <div className="w-[100%] min-h-screen overflow-y-scroll max-h-screen overflow-scrollable px-6">
+          {children}
+        </div>
+      </section >
+    </main >
   )
 }
