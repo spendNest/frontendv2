@@ -58,6 +58,7 @@ export default function Auth() {
         console.log("instance", instanceProvider);
         
         const FactoryContract = new ethers.Contract(factoryAddress,factoryAbi,  instanceProvider.getSigner());
+
         setFactoryContract(FactoryContract);
         const tx = await FactoryContract._returnAddress(instance.getAddress());
         setChildAddress(tx);
@@ -75,14 +76,21 @@ export default function Auth() {
         window.localStorage.setItem("walletAddress", walletAddress);
         setAddress(instance.getAddress());
         const instanceProvider = new ComethProvider(instance);
-        const FactoryContract = new ethers.Contract(factoryAddress,factoryAbi,  instanceProvider.getSigner());
+
+        const FactoryContract = new ethers.Contract(factoryAddress, factoryAbi,  instanceProvider.getSigner());
         setFactoryContract(FactoryContract);
+
         const tx = await FactoryContract.createAccount();
         // setTransactionSended(tx);
         const txResponse = await tx.wait();
+
         console.log('response',txResponse);
         setProvider(instanceProvider);
         console.log("instance", instanceProvider);
+
+        const tx2 = await FactoryContract._returnAddress(instance.getAddress());
+        // axios.
+
         
       }
       console.log("ins", instance);
