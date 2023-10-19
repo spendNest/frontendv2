@@ -11,9 +11,11 @@ function AppProvider({ children }) {
   const [address, setAddress] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [isConnected, setIsConnected] = useState(false)
+  const [factoryContract, setFactoryContract] = useState({});
+  const [childAddress, setChildAddress] = useState("");
 
   return (
-    <AppContext.Provider value={{ wallet, setWallet, setProvider, provider, errMessage, setErrMessage, address, setAddress, isLoading, setIsLoading, isConnected, setIsConnected }}>{children}</AppContext.Provider>
+    <AppContext.Provider value={{ wallet, setWallet, setProvider, provider, errMessage, setErrMessage, address, setAddress, isLoading, setIsLoading, isConnected, setIsConnected, factoryContract, setFactoryContract, childAddress, setChildAddress }}>{children}</AppContext.Provider>
   )
 }
 

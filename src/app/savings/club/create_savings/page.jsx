@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import CreateSavings from '@/features/Savings/CreateSavings'
-import '@/pages/globals.css'
+import '@/app/globals.css'
 
 const Page = () => {
   return (

@@ -7,7 +7,7 @@ export default function FundHeader({ title, type }) {
   const router = useRouter()
   return (
     <div>
-      <div className="flex gap-4 items-center mt-16 ">
+      <div className="flex gap-4 items-center pt-16 ">
         <PiArrowLeftBold
           size={24}
           className={`font-bold cursor-pointer ${type === "home" ? "mt-2" : ""}`}

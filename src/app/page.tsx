@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 export default function Home() {
   const { createWallet, isLoading, isConnected } = Auth();
   const router = useRouter();
+  console.log('is', isConnected)
 
   useEffect(() => {
     if (isConnected) {

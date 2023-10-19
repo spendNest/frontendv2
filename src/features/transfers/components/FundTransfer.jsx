@@ -10,7 +10,6 @@ export default function FundTransfer() {
   const { address } = Auth();
 
   const copyToClipboard = () => {
-
     let copyText = address;
     let isCopy = copy(copyText);
 

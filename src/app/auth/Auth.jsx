@@ -8,9 +8,14 @@ import {
   ComethProvider,
 } from "@cometh/connect-sdk";
 import { useAppContext } from "./Context";
+import factoryAbi from "./abi/factory.json";
+import childAbi from "./abi/child.json";
+import { ethers } from "ethers";
+import { factoryAddress } from "./contractAddress";
 
 export default function Auth() {
   const {
+    provider,
     setProvider,
     setErrMessage,
     wallet,
@@ -21,8 +26,12 @@ export default function Auth() {
     setIsLoading,
     isConnected,
     setIsConnected,
+    factoryContract,
+    setFactoryContract,
+    childAddress,
+    setChildAddress,
   } = useAppContext();
-  console.log(wallet)
+  console.log(wallet);
 
   const apiKey = "15511501-2129-4f96-857a-762009df1f07";
   const walletAdaptor = new ConnectAdaptor({
@@ -40,25 +49,65 @@ export default function Auth() {
       const localStorageAddress = window.localStorage.getItem("walletAddress");
 
       if (localStorageAddress) {
+        console.log("clicked");
         setIsLoading(true);
         await instance.connect(localStorageAddress);
         setAddress(instance.getAddress());
+        const instanceProvider = new ComethProvider(instance);
+        setProvider(instanceProvider);
+        console.log("instance", instanceProvider);
+
+        const FactoryContract = new ethers.Contract(
+          factoryAddress,
+          factoryAbi,
+          instanceProvider.getSigner()
+        );
+
+        setFactoryContract(FactoryContract);
+        const tx = await FactoryContract._returnAddress(instance.getAddress());
+        setChildAddress(tx);
+        console.log("tx", tx);
+        
+        // const txResponse = await tx.wait();
+        // console.log('response',txResponse);
+        // setProvider(instanceProvider);
       } else {
+        console.log("clicked");
         setIsLoading(true);
         await instance.connect();
         const walletAddress = instance.getAddress();
         window.localStorage.setItem("walletAddress", walletAddress);
         setAddress(instance.getAddress());
-      }
+        const instanceProvider = new ComethProvider(instance);
 
+        const FactoryContract = new ethers.Contract(
+          factoryAddress,
+          factoryAbi,
+          instanceProvider.getSigner()
+        );
+        setFactoryContract(FactoryContract);
+
+        const tx = await FactoryContract.createAccount();
+        // setTransactionSended(tx);
+        const txResponse = await tx.wait();
+
+        console.log("response", txResponse);
+        setProvider(instanceProvider);
+        console.log("instance", instanceProvider);
+
+        const tx2 = await FactoryContract._returnAddress(instance.getAddress());
+
+        await axios.post("https://api.connect.cometh.io/sponsored-address", {
+          "Content-Type": "application/json",
+          apisecret: "b51787f8-2247-4ae2-88a6-d8cdc1bc38e6",
+        }, {"targetAddress": tx2});
+        
+      }
       console.log("ins", instance);
       setWallet(instance);
-      const instanceProvider = new ComethProvider(instance);
-      setProvider(instanceProvider);
-
-      console.log("instance", instanceProvider);
-      setIsConnected(true)
+      setIsConnected(true);
       setIsLoading(false);
+      console.log("trans complete");
     } catch (error) {
       setErrMessage(error.message);
       console.log("error", error.message);
@@ -73,7 +122,6 @@ export default function Auth() {
         setWallet(null);
         setProvider(null);
         setAddress("");
-
       } catch (e) {
         console.log(e.message);
         // displayError((e ).message);
@@ -84,6 +132,7 @@ export default function Auth() {
   return {
     createWallet,
     disconnect,
+    provider,
     setProvider,
     setErrMessage,
     wallet,
@@ -94,5 +143,9 @@ export default function Auth() {
     setIsLoading,
     isConnected,
     setIsConnected,
+    factoryContract,
+    setFactoryContract,
+    childAddress,
+    setChildAddress,
   };
 }

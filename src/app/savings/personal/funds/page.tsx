@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import PersonalSavingsAction from '@/features/Savings/PersonalSavingsAction'
-import '@/pages/globals.css'
+import '@/app/globals.css'
 
 export default function page() {
   return (
