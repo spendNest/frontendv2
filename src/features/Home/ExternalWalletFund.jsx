@@ -4,11 +4,15 @@ import React, { useState } from 'react'
 import { PiArrowLeftBold } from 'react-icons/pi'
 import { useRouter } from 'next/navigation'
 import { toast } from 'react-toastify'
+import { ethers } from 'ethers'
+import Auth from '@/app/auth/Auth'
+import childAbi from "@/app/auth/abi/child.json";
 
 const ExternalWalletFund = () => {
   const router = useRouter()
   const [showModal, setShowModal] = useState()
   const [amountVal, setAmountVal] = useState()
+  const { childAddress, provider } = Auth();
 
   const setModal = () => {
     if (Number(amountVal) < 0 || amountVal === undefined || amountVal === "") {
@@ -16,6 +20,21 @@ const ExternalWalletFund = () => {
       return;
     }
     setShowModal(true)
+  }
+
+  //fund external wallet
+  const fundWallet = async () => {
+    const ChildContract = new ethers.Contract(
+      childAddress,
+      childAbi,
+      provider.getSigner()
+    );
+
+    const tx = await ChildContract.depositFund(Number(amountVal * 1000000))
+
+    const txResponse = await tx.wait();
+    console.log(txResponse);
+    // console.log(txResponse.error);
   }
 
   return (
@@ -56,7 +75,7 @@ const ExternalWalletFund = () => {
 
       {/* Modal */}
       {showModal &&
-        <Modal amount={amountVal} setShowModal={setShowModal} />
+        <Modal amount={amountVal} setShowModal={setShowModal} Fund={fundWallet}  />
       }
     </Layout>
   )

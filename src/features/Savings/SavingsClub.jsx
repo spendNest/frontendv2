@@ -135,7 +135,7 @@ export default function SavingsClub() {
 
         <div className="flex justify-center w-[50%] mx-auto">
           <div className='text-black grid mt-1 w-full'>
-            <span className='font-bold text-lg pb-1 hover:cursor-pointer block text-center'>Live</span>
+            <span onClick={() => setSavingLive(true)} className='font-bold text-lg pb-1 hover:cursor-pointer block text-center'>Live</span>
             <div className="w-full bg-[#D9D9D9] h-[3px]">
               <div
                 className="h-full bg-[#0F4880]"
@@ -145,7 +145,7 @@ export default function SavingsClub() {
             </div>
           </div>
           <div className='text-black grid mt-1 w-full'>
-            <span className='font-bold text-lg pb-1 hover:cursor-pointer block text-center'>Completed</span>
+            <span onClick={() => setSavingLive(false)} className='font-bold text-lg pb-1 hover:cursor-pointer block text-center'>Completed</span>
             <div className="w-full bg-[#D9D9D9] h-[3px]">
               <div
                 className="h-full bg-[#0F4880]"

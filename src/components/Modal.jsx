@@ -5,9 +5,9 @@ import { coins } from '@/utils';
 import Image from 'next/image';
 
 
-export const Modal = ({ txnId, amount, setShowModal }) => {
+export const Modal = ({ txnId, amount, setShowModal, Fund }) => {
   let [isOpen, setIsOpen,] = useState(true)
-  const { address } = Auth();
+  const { childAddress } = Auth();
 
   return (
     <Transition
@@ -74,7 +74,7 @@ export const Modal = ({ txnId, amount, setShowModal }) => {
                   <div className='grotesk_font text-[17px] mt-20'>
                     <div className='flex items-center justify-between mb-4'>
                       <span>Wallet Address:</span>
-                      <span>yrh899kfjryhhgfj948jdj</span>
+                      <span>{childAddress}</span>
                     </div>
                     <div className='flex items-center justify-between'>
                       <span className='font-bold'>Transaction ID:</span>
@@ -83,7 +83,7 @@ export const Modal = ({ txnId, amount, setShowModal }) => {
                   </div>
                 </div>
 
-                <button onClick={() => setModal()} className='px-4 grotesk_font h-fit w-full py-3 rounded-xl block text-center text-[white] bg-[#0F4880]'>
+                <button onClick={() => {Fund()}} className='px-4 grotesk_font h-fit w-full py-3 rounded-xl block text-center text-[white] bg-[#0F4880]'>
                   Fund Account
                 </button>
               </Dialog.Panel>

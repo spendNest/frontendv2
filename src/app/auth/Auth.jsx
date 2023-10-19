@@ -10,6 +10,7 @@ import {
 import { useAppContext } from "./Context";
 import factoryAbi from "./abi/factory.json";
 import childAbi from "./abi/child.json";
+import axios from 'axios';
 import { ethers } from "ethers";
 import { factoryAddress } from "./contractAddress";
 
@@ -31,7 +32,6 @@ export default function Auth() {
     childAddress,
     setChildAddress,
   } = useAppContext();
-  console.log(wallet);
 
   const apiKey = "15511501-2129-4f96-857a-762009df1f07";
   const walletAdaptor = new ConnectAdaptor({
@@ -45,9 +45,8 @@ export default function Auth() {
 
   const createWallet = async () => {
     try {
-      console.log("api", apiKey);
       const localStorageAddress = window.localStorage.getItem("walletAddress");
-
+      console.log(localStorageAddress)
       if (localStorageAddress) {
         console.log("clicked");
         setIsLoading(true);
@@ -67,12 +66,11 @@ export default function Auth() {
         const tx = await FactoryContract._returnAddress(instance.getAddress());
         setChildAddress(tx);
         console.log("tx", tx);
-        
+
         // const txResponse = await tx.wait();
         // console.log('response',txResponse);
         // setProvider(instanceProvider);
       } else {
-        console.log("clicked");
         setIsLoading(true);
         await instance.connect();
         const walletAddress = instance.getAddress();
@@ -100,8 +98,8 @@ export default function Auth() {
         await axios.post("https://api.connect.cometh.io/sponsored-address", {
           "Content-Type": "application/json",
           apisecret: "b51787f8-2247-4ae2-88a6-d8cdc1bc38e6",
-        }, {"targetAddress": tx2});
-        
+        }, { "targetAddress": tx2 });
+
       }
       console.log("ins", instance);
       setWallet(instance);
