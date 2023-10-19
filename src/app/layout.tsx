@@ -2,7 +2,7 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-// import Context from '@/app/auth/Context'
+import Context from '@/app/auth/Context'
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -35,10 +35,10 @@ export default function RootLayout({
       theme="colored"
     />
 
-        {/* <Context> */}
+        <Context>
 
         {children}
-        {/* </Context> */}
+        </Context>
         </body>
        
     </html>
