@@ -1,16 +1,23 @@
 "use client"
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { toast } from "react-toastify";
 import Auth from "@/app/auth/Auth";
 import copy from "copy-to-clipboard";
+import { useRouter } from 'next/navigation';
 
 const WalletId = ({ type }) => {
-  const { address } = Auth();
+  const { childAddress, disconnect, isConnected } = Auth();
   const [copied, setCopied] = useState(false)
+  const router = useRouter()
 
+
+    // disconnect
+
+console.log('cc', isConnected)
+ 
   const copyToClipboard = () => {
-    let copyText = address;
+    let copyText = childAddress;
     let isCopy = copy(copyText);
 
     if (isCopy) {
@@ -21,6 +28,11 @@ const WalletId = ({ type }) => {
       setCopied(false);
     }, 5000);
   };
+  // useEffect(()=>{
+  //   if(isConnected == false){
+  //     router.push("/")
+  //   }
+  // }, [isConnected])
   return (
     <div>
       <div className='mt-8 sm:mt-20 mb-6'>
@@ -30,7 +42,7 @@ const WalletId = ({ type }) => {
       <div className='fund_wallet_id_bg p-4 flex items-center justify-between'>
         <div>
           <span className='text-[#696969] block mb-2'>Wallet ID</span>
-          <span className='text-[17px] block'>yrh899kfjryhhgfj948jdj</span>
+          <span className='text-[17px] block'>{childAddress}</span>
         </div>
 
         {type === "fund" ?
@@ -45,7 +57,7 @@ const WalletId = ({ type }) => {
             />
           </button>
           :
-          <button className='px-4 h-fit py-2 rounded-xl flex items-center gap-1 text-[white] bg-[#0F4880]'>
+          <button onClick={disconnect} className='px-4 h-fit py-2 rounded-xl flex items-center gap-1 text-[white] bg-[#0F4880]'>
             Disconnect Wallet
           </button>
         }
