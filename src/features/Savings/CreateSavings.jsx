@@ -77,6 +77,10 @@ const CreateSavings = () => {
             </div>
           </div>
         </div>
+
+        <button className="w-[360px] h-[58px] rounded-lg bg-[#2A0FB1] text-[#FEFEFE] text-[17px] block mx-auto leading-[25.5px] tracking-[0.5%] mt-[80px] ">
+          Create Savings Club
+        </button>
       </div>
     </Layout>
   )
