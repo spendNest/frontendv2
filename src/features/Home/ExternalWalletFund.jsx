@@ -7,13 +7,15 @@ import { toast } from 'react-toastify'
 import { ethers } from 'ethers'
 import Auth from '@/app/auth/Auth'
 import childAbi from "@/app/auth/abi/child.json";
+import ERC20ABI from '@/app/auth/abi/Erc20ABI.json'
+import { tokenAddress } from '@/app/auth/contractAddress'
 
 const ExternalWalletFund = () => {
   const router = useRouter()
   const [showModal, setShowModal] = useState()
+  const { childAddress, provider, address } = Auth();
   const [amountVal, setAmountVal] = useState()
   const [sending, setSending] = useState(false)
-  const { childAddress, provider } = Auth();
 
   const setModal = () => {
     if (Number(amountVal) < 0 || amountVal === undefined || amountVal === "") {
@@ -23,6 +25,8 @@ const ExternalWalletFund = () => {
     setShowModal(true)
   }
 
+  console.log('adchildAddressdr', childAddress)
+  console.log('waaddress', address)
   //fund external wallet
   const fundWallet = async () => {
     setSending(true)
@@ -31,17 +35,22 @@ const ExternalWalletFund = () => {
       childAbi,
       provider.getSigner()
     );
-    try {
-      const tx = await ChildContract.depositFund(Number(amountVal * 1000000))
-      const txResponse = await tx.wait();
-      setSending(false)
-      console.log(txResponse);
-      setShowModal(false)
-    } catch (error) {
-      toast.error(error)
-      console.log(error)
-      setSending(false)
-    }
+    const token = new ethers.Contract(
+      tokenAddress,
+      ERC20ABI,
+      provider.getSigner()
+    );
+
+    const approve = await token.approve(childAddress, Number(amountVal * 1000000))
+
+    const approveRes = await approve.wait();
+    console.log('approve', approveRes);
+
+    const tx = await ChildContract.depositFund(Number(amountVal))
+
+    const txResponse = await tx.wait();
+    console.log(txResponse);
+    // console.log(txResponse.error);
   }
 
   return (
