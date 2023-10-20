@@ -25,6 +25,7 @@ const ExternalWalletFund = () => {
   }
 
   console.log('adchildAddressdr', childAddress)
+  console.log('waaddress', address)
   //fund external wallet
   const fundWallet = async () => {
     const ChildContract = new ethers.Contract(

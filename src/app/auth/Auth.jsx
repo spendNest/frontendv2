@@ -44,6 +44,7 @@ export default function Auth() {
   });
 
   const createWallet = async () => {
+    console.log("clicked 0");
     try {
       const localStorageAddress = window.localStorage.getItem("walletAddress");
       console.log(localStorageAddress)
@@ -65,12 +66,13 @@ export default function Auth() {
         setFactoryContract(FactoryContract);
         const tx = await FactoryContract._returnAddress(instance.getAddress());
         setChildAddress(tx);
-        console.log("tx", tx);
+        console.log("myaddr", tx);
 
         // const txResponse = await tx.wait();
         // console.log('response',txResponse);
         // setProvider(instanceProvider);
       } else {
+        console.log("clicked");
         setIsLoading(true);
         await instance.connect();
         const walletAddress = instance.getAddress();
@@ -95,10 +97,10 @@ export default function Auth() {
 
         const tx2 = await FactoryContract._returnAddress(instance.getAddress());
 
-        await axios.post("https://api.connect.cometh.io/sponsored-address", {
-          "Content-Type": "application/json",
-          apisecret: "b51787f8-2247-4ae2-88a6-d8cdc1bc38e6",
-        }, { "targetAddress": tx2 });
+        // await axios.post("https://api.connect.cometh.io/sponsored-address", {
+        //   "Content-Type": "application/json",
+        //   apisecret: "b51787f8-2247-4ae2-88a6-d8cdc1bc38e6",
+        // }, { "targetAddress": tx2 });
 
       }
       console.log("ins", instance);

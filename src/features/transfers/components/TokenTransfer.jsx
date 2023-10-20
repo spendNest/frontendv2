@@ -1,6 +1,7 @@
 import Auth from "@/app/auth/Auth";
 import { useState } from "react"
 import childAbi from "@/app/auth/abi/child.json";
+import { ethers } from "ethers";
 
 
 export default function TokenTransfer({ btnText, type }) {
@@ -9,7 +10,9 @@ export default function TokenTransfer({ btnText, type }) {
 
   const {childAddress, provider} = Auth()
 
-  const fundWallet = async () => {
+  const fundWallet = async (e) => {
+    e.preventDefault();
+
     const ChildContract = new ethers.Contract(
       childAddress,
       childAbi,
@@ -45,7 +48,7 @@ export default function TokenTransfer({ btnText, type }) {
         </div>
         {/* button */}
         <div className="flex justify-center">
-          <button onClick={()=>fundWallet()} className="w-[360px] h-[58px] rounded-lg bg-[#0F4880] text-[#FEFEFE] text-[17px] leading-[25.5px] tracking-[0.5%] mt-[80px] ">
+          <button onClick={fundWallet} className="w-[360px] h-[58px] rounded-lg bg-[#0F4880] text-[#FEFEFE] text-[17px] leading-[25.5px] tracking-[0.5%] mt-[80px] ">
             {btnText}
           </button>
         </div>
