@@ -6,7 +6,7 @@ const AppContext = createContext();
 
 function AppProvider({ children }) {
   const [wallet, setWallet] = useState({})
-  const [provider, setProvider] = useState(localStorage.getItem("provider") ? JSON.parse(localStorage.getItem("provider")) : {})
+  const [provider, setProvider] = useState({})
   const [errMessage, setErrMessage] = useState('')
   const [address, setAddress] = useState('')
   const [isLoading, setIsLoading] = useState(false)
