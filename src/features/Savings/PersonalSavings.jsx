@@ -1,13 +1,34 @@
+'use client'
 import Layout from '@/components/Layout'
 import Image from 'next/image'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { PiArrowLeftBold } from 'react-icons/pi'
 import { LiaGreaterThanSolid } from 'react-icons/lia'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import Auth from '@/app/auth/Auth'
+import { ethers } from 'ethers'
+import childAbi from "@/app/auth/abi/child.json";
 
 export default function PersonalSavings() {
   const router = useRouter()
+  const [pSavings, setPSavings] = useState()
+  const {childAddress, provider} = Auth()
+  const ChildContract = new ethers.Contract(
+    childAddress,
+    childAbi,
+    provider.getSigner()
+  );
+const personalSavings = async () =>{
+
+  const tx = await ChildContract.myPersonalSavings();
+  setPSavings(tx)
+
+}
+useEffect(()=>{
+  personalSavings()
+  console.log('sav',pSavings);
+},[])
 
   return (
     <Layout>
@@ -60,7 +81,7 @@ export default function PersonalSavings() {
               <span className='text-[17px]'>Withdraw</span>
               <span className='text-[10px] mono_font'>To Basic Account</span>
             </div>
-            <Link href={`/savings/personal/funds?type=add`} className='border bg-[#2A0FB1] border-[#2A0FB1] rounded-full items-center flex justify-center w-10 h-10'>
+            <Link href={`/savings/personal/funds?type=withdraw`} className='border bg-[#2A0FB1] border-[#2A0FB1] rounded-full items-center flex justify-center w-10 h-10'>
               <LiaGreaterThanSolid
                 size={24}
                 className="font-bold text-[#fefefe] cursor-pointer"
