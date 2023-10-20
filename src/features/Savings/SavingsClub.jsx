@@ -168,7 +168,7 @@ export default function SavingsClub() {
           }
         </div>
 
-        <div className='flex justify-center items-center text-[#0F4880] gap-2 mt-4'>
+        <div className='flex justify-center items-center text-[#0F4880] gap-2 mt-4 cursor-pointer'>
           <span className='tracking-[0.08px] text-lg grotesk_font'>Create a Savings Club</span>
           <PiArrowRightBold
             size={24}

@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react'
 import childAbi from "@/app/auth/abi/child.json";
 
 export default function SavingsFeatures() {
-  const [pSavings, setPSavings] = useState()
+  const [pSavings, setPSavings] = useState("")
   const {childAddress, provider} = Auth()
   const ChildContract = new ethers.Contract(
     childAddress,
@@ -20,10 +20,10 @@ const personalSavings = async () =>{
   const tx = await ChildContract.myPersonalSavings();
   setPSavings(tx)
 
+  console.log('sav',Number(pSavings));
 }
 useEffect(()=>{
   personalSavings()
-  console.log('sav',pSavings);
 },[])
   return (
     <Layout>
