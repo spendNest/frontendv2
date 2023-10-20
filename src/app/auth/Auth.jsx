@@ -56,6 +56,7 @@ export default function Auth() {
         const instanceProvider = new ComethProvider(instance);
         setProvider(instanceProvider);
         console.log("instance", instanceProvider);
+        localStorage.setItem("provider", JSON.stringify(instanceProvider))
 
         const FactoryContract = new ethers.Contract(
           factoryAddress,
@@ -93,6 +94,7 @@ export default function Auth() {
 
         console.log("response", txResponse);
         setProvider(instanceProvider);
+        localStorage.setItem("provider", JSON.stringify(instanceProvider))
         console.log("instance", instanceProvider);
 
         const tx2 = await FactoryContract._returnAddress(instance.getAddress());
