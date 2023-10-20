@@ -12,6 +12,7 @@ const ExternalWalletFund = () => {
   const router = useRouter()
   const [showModal, setShowModal] = useState()
   const [amountVal, setAmountVal] = useState()
+  const [sending, setSending] = useState(false)
   const { childAddress, provider } = Auth();
 
   const setModal = () => {
@@ -24,17 +25,23 @@ const ExternalWalletFund = () => {
 
   //fund external wallet
   const fundWallet = async () => {
+    setSending(true)
     const ChildContract = new ethers.Contract(
       childAddress,
       childAbi,
       provider.getSigner()
     );
-
-    const tx = await ChildContract.depositFund(Number(amountVal * 1000000))
-
-    const txResponse = await tx.wait();
-    console.log(txResponse);
-    // console.log(txResponse.error);
+    try {
+      const tx = await ChildContract.depositFund(Number(amountVal * 1000000))
+      const txResponse = await tx.wait();
+      setSending(false)
+      console.log(txResponse);
+      setShowModal(false)
+    } catch (error) {
+      toast.error(error)
+      console.log(error)
+      setSending(false)
+    }
   }
 
   return (
@@ -66,7 +73,7 @@ const ExternalWalletFund = () => {
             </div>
 
             <button onClick={() => setModal()} className='px-4 h-fit py-2 rounded-xl flex items-center gap-1 text-[white] bg-[#0F4880]'>
-              Send
+              {sending ? "Sending" : "Send"}
             </button>
 
           </div>
@@ -75,7 +82,7 @@ const ExternalWalletFund = () => {
 
       {/* Modal */}
       {showModal &&
-        <Modal amount={amountVal} setShowModal={setShowModal} Fund={fundWallet}  />
+        <Modal sending={sending} amount={amountVal} setShowModal={setShowModal} Fund={fundWallet} />
       }
     </Layout>
   )
