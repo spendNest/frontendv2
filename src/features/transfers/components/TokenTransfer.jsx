@@ -2,35 +2,47 @@ import Auth from "@/app/auth/Auth";
 import { useState } from "react"
 import childAbi from "@/app/auth/abi/child.json";
 import { ethers } from "ethers";
+import { toast } from "react-toastify";
 
 
 export default function TokenTransfer({ btnText, type }) {
   const [amountVal, setAmountVal] = useState();
   const [sendeAddr, setSendeAddress] = useState("");
 
-  const {childAddress, provider} = Auth()
+  const { childAddress, provider } = Auth()
 
   const fundWallet = async (e) => {
-    e.preventDefault();
+    console.log(amountVal)
+    if ((Number(amountVal) < 1) || amountVal === undefined) {
+      toast.error("Invalid Amount")
+      return;
+    }
+    try {
+      e.preventDefault();
 
-    const ChildContract = new ethers.Contract(
-      childAddress,
-      childAbi,
-      provider.getSigner()
-    );
-  
+      const ChildContract = new ethers.Contract(
+        childAddress,
+        childAbi,
+        provider.getSigner()
+      );
 
-    const tx = await ChildContract.transferFund(sendeAddr, Number(amountVal))
 
-    const txResponse = await tx.wait();
-    console.log(txResponse);
-    // console.log(txResponse.error);
+      const tx = await ChildContract.transferFund(sendeAddr, Number(amountVal))
+
+      const txResponse = await tx.wait();
+      console.log(txResponse);
+      // console.log(txResponse.error);
+      toast.error("Transaction successful")
+
+    } catch (error) {
+      toast.error("Transaction failed")
+    }
   }
 
   return (
     <div>
-      <form>
-        <div className="block md:flex md:gap-10">
+      <div>
+        <div className="block md:flex gap-3  md:gap-10">
           <div className="w-full md:w-[50%]">
             <label htmlFor="" className="font-normal text-[17px] leading-5 tracking-[0.5%] ">{type === "home" ? "Amount to Withdraw" : "Amount to transfer"}</label>
             <div className="flex items-center border-[1px] border-[#696969] rounded-lg pl-[10px] w-fit gap-4 h-[72px] mt-2">
@@ -52,7 +64,7 @@ export default function TokenTransfer({ btnText, type }) {
             {btnText}
           </button>
         </div>
-      </form>
+      </div>
     </div>
   )
 }
