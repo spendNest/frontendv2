@@ -15,12 +15,12 @@ import { factoryAddress } from "@/app/auth/contractAddress";
 export default function SavingsClub() {
   const router = useRouter();
   const [savingLive, setSavingLive] = useState(true);
-  const { childAddress, provider } = Auth();
+  const { childAddress, provider,  } = Auth();
   const [data, setData] = useState([]);
 
   const combinedData = data.map((_, index) => data.map((arr) => arr[index]));
 
-
+console.log('childAddress',childAddress);
   const getData = async () => {
     const ChildContract = new ethers.Contract(
       factoryAddress,

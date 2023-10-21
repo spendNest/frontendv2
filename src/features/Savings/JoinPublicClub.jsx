@@ -1,12 +1,38 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Layout from '@/components/Layout'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { toast } from 'react-toastify'
+import Auth from "@/app/auth/Auth";
+import { ethers } from "ethers";
+import { factoryAddress } from "@/app/auth/contractAddress";
+import factoryAbi from "@/app/auth/abi/factory.json";
 
 const JoinPublicClub = () => {
   const router = useRouter()
+  const searchParams =useSearchParams()
+
+  const name = searchParams.get('name')
   const [showJoinModal, setShowJoinModal] = useState(false)
+  const { childAddress, provider } = Auth();
+  const [data, setData] = useState([]);
+  
+  const getData = async () => {
+    const ChildContract = new ethers.Contract(
+      factoryAddress,
+      factoryAbi,
+      provider.getSigner()
+      );
+      
+      const tx = await ChildContract.viewSinglePublic(name);
+      setData(tx);
+    };
+    console.log(data)
+
+  useEffect(() => {
+    getData();
+  }, []);
+
 
   const joinSavingsClub = () => {
     try {
@@ -15,6 +41,11 @@ const JoinPublicClub = () => {
       console.log(error)
       toast.error("Joining Club Failed")
     }
+  }
+  function convertEpochToDate(epochTimeInSeconds) {
+    const date = new Date(0);
+    date.setUTCSeconds(epochTimeInSeconds);
+    return date;
   }
   return (
     <Layout>
@@ -30,8 +61,9 @@ const JoinPublicClub = () => {
                 height={80}
               />
             </div>
-            <span className='font-bold text-lg'>Holiday in UK</span>
+            <span className='font-bold text-lg'>{data[0]}</span>
           </div>
+          {/* _clubName, _startDate, _endDate, _savingsGoal, _totalParticipant */}
 
           <div className='flex items-center gap-3'>
             <div className="w-[200px] bg-[#D9D9D9] h-[3px]">
@@ -44,7 +76,7 @@ const JoinPublicClub = () => {
             <span>17%</span>
           </div>
           <div className='grid'>
-            <span className='text-[17px] font-bold'>120</span>
+            <span className='text-[17px] font-bold'>{Number(data[4])}</span>
             <span className='text-[20px]'>members</span>
           </div>
           <div className='grid'>
@@ -77,15 +109,15 @@ const JoinPublicClub = () => {
       <div className='flex flex-wrap gap-4 mt-16'>
         <div className='grid bg-[#D2E9FF] p-2 w-[300px] rounded-md'>
           <span className='text-[17px]'>Start Date</span>
-          <span className='text-[20px] font-bold text-black'>20th October, 2023</span>
+          <span className='text-[20px] font-bold text-black'>{convertEpochToDate(Number(data[1]))}</span>
         </div>
         <div className='grid bg-[#D2E9FF] p-2 w-[300px] rounded-md'>
           <span className='text-[17px]'>Withdrawal Date</span>
-          <span className='text-[20px] font-bold text-black'>20th October, 2023</span>
+          <span className='text-[20px] font-bold text-black'>{Number(data[2])}</span>
         </div>
         <div className='grid bg-[#D2E9FF] p-2 w-[300px] rounded-md'>
           <span className='text-[17px]'>Target Per Member</span>
-          <span className='text-[20px] font-bold text-black'>$1,000.00</span>
+          <span className='text-[20px] font-bold text-black'>$ {Number(data[3])}</span>
         </div>
         <div className='grid bg-[#D2E9FF] p-2 w-[300px] rounded-md'>
           <span className='text-[17px]'>Interest Per Annum</span>
