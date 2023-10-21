@@ -7,25 +7,23 @@ import Image from 'next/image'
 import Auth from '@/app/auth/Auth'
 import childAbi from '@/app/auth/abi/child.json'
 import { ethers } from 'ethers'
+import { useRouter } from 'next/navigation'
 
 export default function HomeFeatures() {
   const { childAddress, provider, createWallet, isLoading, isConnected } = Auth();
   const [accountDetails, setAccountDetails] = useState([])
-  console.log('is', provider)
-  const contract = new ethers.Contract(childAddress, childAbi, provider?.getSigner());
-  const readAccountDetails = async () => {
-    const tx = await contract.viewAccount();
-    setAccountDetails(tx);
-  }
-
-  // console.log('pro', provider.ComethProvider)
+  const router = useRouter()
 
   useEffect(() => {
-    if (Object.values(provider).length > 0 || provider !== undefined || provider !== null) {
-
+    if ((Object.keys(provider)).length > 0) {
+      const contract = new ethers.Contract(childAddress, childAbi, provider?.getSigner());
+      const readAccountDetails = async () => {
+        const tx = await contract.viewAccount();
+        setAccountDetails(tx);
+      }
       readAccountDetails();
-
-      // return readAccountDetails;
+    } else {
+      router.push('/');
     }
   }, [provider])
 

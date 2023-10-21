@@ -13,22 +13,21 @@ import childAbi from "@/app/auth/abi/child.json";
 export default function PersonalSavings() {
   const router = useRouter()
   const [pSavings, setPSavings] = useState()
-  const {childAddress, provider} = Auth()
-  const ChildContract = new ethers.Contract(
-    childAddress,
-    childAbi,
-    provider.getSigner()
-  );
-const personalSavings = async () =>{
+  const { childAddress, provider } = Auth()
 
-  const tx = await ChildContract.myPersonalSavings();
-  setPSavings(tx)
-
-}
-useEffect(()=>{
-  personalSavings()
-  console.log('sav',pSavings);
-},[])
+  useEffect(() => {
+    if ((Object.keys(provider)).length > 0) {
+      const ChildContract = new ethers.Contract(childAddress, childAbi, provider?.getSigner());
+      const personalSavings = async () => {
+        const tx = await ChildContract.myPersonalSavings();
+        setPSavings(tx)
+      }
+      personalSavings();
+    } else {
+      router.push('/');
+    }
+    console.log('sav', pSavings);
+  }, [])
 
   return (
     <Layout>

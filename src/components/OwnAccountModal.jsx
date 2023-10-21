@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import Auth from "@/app/auth/Auth";
 import { coins } from '@/utils';
@@ -7,7 +7,43 @@ import Image from 'next/image';
 
 export const OwnAccountModal = ({ txnId, amount, setShowModal }) => {
   let [isOpen, setIsOpen,] = useState(true)
-  const { address } = Auth();
+  const { childAddress, provider } = Auth();
+  const [amountVal, setAmountVal] = useState();
+  const [sending, setSending] = useState(false)
+
+  const sendBetweenAcct = async (e) => {
+    if (amountVal === undefined) {
+      toast.error('Invalid amount');
+      return;
+    }
+    setSending(true);
+    try {
+      e.preventDefault();
+
+      const ChildContract = new ethers.Contract(
+        childAddress,
+        childAbi,
+        provider.getSigner()
+      );
+
+      const tx = await ChildContract.transferBetweenOwnAcct(Number(amountVal) * 1000000);
+
+      const txResponse = await tx.wait();
+      console.log(txResponse);
+      setSending(false)
+      toast.error("Transaction successful")
+    } catch (error) {
+      setSending(false)
+      toast.error("Transaction failed")
+    }
+    // console.log(txResponse.error);
+  };
+
+  useEffect(() => {
+    if ((Object.keys(provider)).length > 0) { } else {
+      router.push('/');
+    }
+  }, [provider])
 
   return (
     <Transition
@@ -96,8 +132,8 @@ export const OwnAccountModal = ({ txnId, amount, setShowModal }) => {
                       </div>
                     </div>
                     <div className="flex justify-center my-10">
-                      <button onClick={() => setModal()} className='px-4 grotesk_font h-fit w-full py-3 rounded-xl block text-center text-[white] bg-[#0F4880]'>
-                        Send
+                      <button onClick={sendBetweenAcct} disabled={sending} className='px-4 grotesk_font h-fit w-full py-3 rounded-xl block text-center text-[white] bg-[#0F4880]'>
+                        {sending ? "Sending" : "Send"}
                       </button>
                     </div>
                   </form>

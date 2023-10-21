@@ -88,7 +88,7 @@ export const Modal = ({ sending, txnId, amount, setShowModal, Fund }) => {
                   <button onClick={() => setShowModal(false)} className='px-4 grotesk_font h-fit w-full py-3 rounded-xl block text-center text-[white] bg-[red]'>
                     Cancel
                   </button>
-                  <button onClick={() => { Fund() }} className='px-4 grotesk_font h-fit w-full py-3 rounded-xl block text-center text-[white] bg-[#0F4880]'>
+                  <button onClick={() => { Fund() }} disabled={sending} className='px-4 grotesk_font h-fit w-full py-3 rounded-xl block text-center text-[white] bg-[#0F4880]'>
                     {!sending ? "Fund Account" : "Funding"}
                   </button>
                 </div>

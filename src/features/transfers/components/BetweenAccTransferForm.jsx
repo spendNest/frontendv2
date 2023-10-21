@@ -4,30 +4,44 @@ import { ethers } from "ethers";
 import childAbi from "@/app/auth/abi/child.json";
 import React, { useState } from "react";
 import Auth from "@/app/auth/Auth";
+import { toast } from "react-toastify";
 
 export default function BetweenAccTransferForm() {
   const [amountVal, setAmountVal] = useState();
-  const {childAddress, provider} = Auth()
+  const [sending, setSending] = useState(false)
+  const { childAddress, provider } = Auth()
 
   const sendBetweenAcct = async (e) => {
-    e.preventDefault();
+    if (amountVal === undefined) {
+      toast.error('Invalid amount');
+      return;
+    }
+    setSending(true);
+    try {
+      e.preventDefault();
 
-    const ChildContract = new ethers.Contract(
-      childAddress,
-      childAbi,
-      provider.getSigner()
-    );
+      const ChildContract = new ethers.Contract(
+        childAddress,
+        childAbi,
+        provider.getSigner()
+      );
 
-    const tx = await ChildContract.transferBetweenOwnAcct(Number(amountVal) * 1000000);
+      const tx = await ChildContract.transferBetweenOwnAcct(Number(amountVal) * 1000000);
 
-    const txResponse = await tx.wait();
-    console.log(txResponse);
+      const txResponse = await tx.wait();
+      console.log(txResponse);
+      setSending(false)
+      toast.error("Transaction successful")
+    } catch (error) {
+      setSending(false)
+      toast.error("Transaction failed")
+    }
     // console.log(txResponse.error);
   };
   return (
     <section>
       <div className="w-[50%] mx-auto relative">
-        <form className="relative">
+        <div className="relative">
           <div className="flex items-center justify-between border-[2px] z-10 rounded-lg py-[14px] px-[15px] border-black relative">
             <div className="">
               <p className="font-bold text-[14px] leading-6 head2 tracking-[10%] ">
@@ -89,10 +103,10 @@ export default function BetweenAccTransferForm() {
               onClick={sendBetweenAcct}
               className="w-[360px] h-[58px] rounded-lg bg-[#0F4880] text-[#FEFEFE] text-[17px] leading-[25.5px] tracking-[0.5%] mt-[80px] "
             >
-              Send
+              {sending ? "Sending" : "Send"}
             </button>
           </div>
-        </form>
+        </div>
       </div>
     </section>
   );

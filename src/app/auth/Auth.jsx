@@ -44,7 +44,6 @@ export default function Auth() {
   });
 
   const createWallet = async () => {
-    console.log("clicked 0");
     try {
       const localStorageAddress = window.localStorage.getItem("walletAddress");
       console.log(localStorageAddress)
@@ -55,8 +54,6 @@ export default function Auth() {
         setAddress(instance.getAddress());
         const instanceProvider = new ComethProvider(instance);
         setProvider(instanceProvider);
-        console.log("instance", instanceProvider);
-        localStorage.setItem("provider", JSON.stringify(instanceProvider))
 
         const FactoryContract = new ethers.Contract(
           factoryAddress,
@@ -67,13 +64,11 @@ export default function Auth() {
         setFactoryContract(FactoryContract);
         const tx = await FactoryContract._returnAddress(instance.getAddress());
         setChildAddress(tx);
-        console.log("myaddr", tx);
 
         // const txResponse = await tx.wait();
         // console.log('response',txResponse);
         // setProvider(instanceProvider);
       } else {
-        console.log("clicked");
         setIsLoading(true);
         await instance.connect();
         const walletAddress = instance.getAddress();
@@ -92,9 +87,7 @@ export default function Auth() {
         // setTransactionSended(tx);
         const txResponse = await tx.wait();
 
-        console.log("response", txResponse);
         setProvider(instanceProvider);
-        localStorage.setItem("provider", JSON.stringify(instanceProvider))
         console.log("instance", instanceProvider);
 
         const tx2 = await FactoryContract._returnAddress(instance.getAddress());
@@ -105,7 +98,6 @@ export default function Auth() {
         // }, { "targetAddress": tx2 });
 
       }
-      console.log("ins", instance);
       setWallet(instance);
       setIsConnected(true);
       setIsLoading(false);

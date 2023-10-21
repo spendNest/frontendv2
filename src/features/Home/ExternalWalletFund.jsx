@@ -25,32 +25,38 @@ const ExternalWalletFund = () => {
     setShowModal(true)
   }
 
-  console.log('adchildAddressdr', childAddress)
-  console.log('waaddress', address)
   //fund external wallet
   const fundWallet = async () => {
-    setSending(true)
-    const ChildContract = new ethers.Contract(
-      childAddress,
-      childAbi,
-      provider.getSigner()
-    );
-    const token = new ethers.Contract(
-      tokenAddress,
-      ERC20ABI,
-      provider.getSigner()
-    );
+    try {
+      setSending(true)
+      const ChildContract = new ethers.Contract(
+        childAddress,
+        childAbi,
+        provider.getSigner()
+      );
+      const token = new ethers.Contract(
+        tokenAddress,
+        ERC20ABI,
+        provider.getSigner()
+      );
 
-    const approve = await token.approve(childAddress, Number(amountVal * 1000000))
+      const approve = await token.approve(childAddress, Number(amountVal * 1000000))
 
-    const approveRes = await approve.wait();
-    console.log('approve', approveRes);
+      const approveRes = await approve.wait();
+      console.log('approve', approveRes);
 
-    const tx = await ChildContract.depositFund(Number(amountVal))
+      const tx = await ChildContract.depositFund(Number(amountVal))
 
-    const txResponse = await tx.wait();
-    console.log(txResponse);
-    // console.log(txResponse.error);
+      const txResponse = await tx.wait();
+      console.log(txResponse);
+      toast.success("transaction successfull")
+      // console.log(txResponse.error);
+
+    } catch (error) {
+      setSending(false)
+      toast.error("transaction failed")
+      console.log(error)
+    }
   }
 
   return (
