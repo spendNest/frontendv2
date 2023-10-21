@@ -285,13 +285,7 @@
   {
     "inputs": [],
     "name": "getPublicSavingData",
-    "outputs": [
-      { "internalType": "string[]", "name": "", "type": "string[]" },
-      { "internalType": "uint256[]", "name": "", "type": "uint256[]" },
-      { "internalType": "uint256[]", "name": "", "type": "uint256[]" },
-      { "internalType": "uint256[]", "name": "", "type": "uint256[]" },
-      { "internalType": "uint256[]", "name": "", "type": "uint256[]" }
-    ],
+    "outputs": [],
     "stateMutability": "view",
     "type": "function"
   },

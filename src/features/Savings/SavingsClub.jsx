@@ -1,13 +1,41 @@
 import Layout from '@/components/Layout'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { PiArrowLeftBold, PiArrowRightBold } from 'react-icons/pi'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import childAbi from "@/app/auth/abi/child.json";
+import factoryAbi from "@/app/auth/abi/factory.json";
+import Auth from "@/app/auth/Auth";
+import { ethers } from 'ethers'
+import {factoryAddress} from '@/app/auth/contractAddress'
+
 
 export default function SavingsClub() {
   const router = useRouter()
   const [savingLive, setSavingLive] = useState(true)
+  const {childAddress, provider} = Auth()
+  const [data, setData] =useState([]);
+
+  const combinedData = data.map((_, index)=>(data.map((arr)=>arr[index])));
+
+  console.log('mydd',data);
+  const getData = async() =>{
+    const ChildContract = new ethers.Contract(
+      factoryAddress,
+      factoryAbi,
+      provider.getSigner()
+    );
+
+    const tx = await ChildContract.showPublicData();
+    setData(tx);
+    console.log(tx);
+  }
+
+  useEffect(()=>{
+getData()
+
+  },[])
 
   return (
     <Layout>
@@ -50,34 +78,38 @@ export default function SavingsClub() {
             </Link>
           </div>
           <div className="flex flex-wrap justify-center gap-10 mt-8 text-white">
+{
+  combinedData?.slice(0, 3)?.map((values)=>(
+    <div className='w-full rounded-[8px] border-t md:max-w-[300px]' >
+    <div className='w-full h-[180px] flex justify-center' style={{ backgroundColor: "rgba(143, 231, 108, 0.50)" }} >
+      <Image
+        src="/savings/dollar_coins.svg"
+        alt={""}
+        className="w-full"
+        width={120}
+        height={120}
+      />
+    </div>
 
-            <div className='w-full rounded-[8px] border-t md:max-w-[300px]' >
-              <div className='w-full h-[180px] flex justify-center' style={{ backgroundColor: "rgba(143, 231, 108, 0.50)" }} >
-                <Image
-                  src="/savings/dollar_coins.svg"
-                  alt={""}
-                  className="w-full"
-                  width={120}
-                  height={120}
-                />
-              </div>
-
-              <div className='text-black grid mt-1'>
-                <span className='font-bold text-lg'>Holiday in UK</span>
-                <div className="w-full bg-[#D9D9D9] h-[3px]">
-                  <div
-                    className="h-full bg-[#0F4880]"
-                    role="progressbar"
-                    style={{ width: `${10}%` }}
-                  ></div>
-                </div>
-                <div className='space-x-2'>
-                  <span className='text-[14px] font-bold'>120</span>
-                  <span className='text-[12px]'>members</span>
-                </div>
-              </div>
-            </div>
-            <div className='w-full rounded-[8px] border-t md:max-w-[300px]' >
+    <div className='text-black grid mt-1'>
+      <span className='font-bold text-lg'>{values[0]}</span>
+      <div className="w-full bg-[#D9D9D9] h-[3px]">
+        <div
+          className="h-full bg-[#0F4880]"
+          role="progressbar"
+          style={{ width: `${10}%` }}
+        ></div>
+      </div>
+      <div className='space-x-2'>
+        <span className='text-[14px] font-bold'>{Number(values[4])}</span>
+        <span className='text-[12px]'>members</span>
+      </div>
+    </div>
+  </div>
+  ))
+}
+           
+            {/* <div className='w-full rounded-[8px] border-t md:max-w-[300px]' >
               <div className='w-full h-[180px] flex justify-center' style={{ backgroundColor: "rgba(224, 207, 186, 0.50)" }} >
                 <Image
                   src="/savings/hand_sack.svg"
@@ -128,7 +160,7 @@ export default function SavingsClub() {
                   <span className='text-[12px]'>members</span>
                 </div>
               </div>
-            </div>
+            </div> */}
 
           </div>
         </div>

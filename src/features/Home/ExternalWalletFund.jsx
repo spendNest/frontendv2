@@ -45,11 +45,16 @@ const ExternalWalletFund = () => {
 
     const approveRes = await approve.wait();
     console.log('approve', approveRes);
+    toast.success('token Approve')
 
     const tx = await ChildContract.depositFund(Number(amountVal))
 
     const txResponse = await tx.wait();
+
     console.log(txResponse);
+    setSending(false)
+    toast.success('transaction succesful')
+    setShowModal(false)
     // console.log(txResponse.error);
   }
 
