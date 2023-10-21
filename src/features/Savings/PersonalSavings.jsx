@@ -26,7 +26,6 @@ export default function PersonalSavings() {
     } else {
       router.push('/');
     }
-    console.log('sav', pSavings);
   }, [])
 
   return (

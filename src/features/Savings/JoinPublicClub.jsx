@@ -7,6 +7,7 @@ import Auth from "@/app/auth/Auth";
 import { ethers } from "ethers";
 import { factoryAddress } from "@/app/auth/contractAddress";
 import factoryAbi from "@/app/auth/abi/factory.json";
+import childAbi from "@/app/auth/abi/child.json";
 import { formatDate, returnPercentage } from '@/utils'
 
 const JoinPublicClub = () => {
@@ -15,6 +16,7 @@ const JoinPublicClub = () => {
 
   const name = searchParams.get('name')
   const [showJoinModal, setShowJoinModal] = useState(false)
+  const [joining, setJoining] = useState(false)
   const { childAddress, provider } = Auth();
   const [data, setData] = useState([]);
 
@@ -40,21 +42,26 @@ const JoinPublicClub = () => {
     getData();
   }, []);
 
-
-
-  const joinSavingsClub = () => {
+  const joinSavingsClub = async () => {
     try {
-      console.log("working")
+      setJoining(true)
+      const ChildContract = new ethers.Contract(
+        childAddress,
+        childAbi,
+        provider.getSigner()
+      );
+      await ChildContract.joinPublicClub(name);
+      setJoining(false)
+      toast.success(`Joined ${name} successful`)
+      setShowJoinModal(false)
     } catch (error) {
       console.log(error)
-      toast.error("Joining Club Failed")
+      setJoining(false)
+      setShowJoinModal(false)
+      toast.error(error.reason ? error.reason : "Failed to Join")
     }
   }
-  function convertEpochToDate(epochTimeInSeconds) {
-    const date = new Date(0);
-    date.setUTCSeconds(epochTimeInSeconds);
-    return date;
-  }
+
   useEffect(() => {
     getData();
   }, []);
@@ -142,7 +149,7 @@ const JoinPublicClub = () => {
               <p className="py-4">You are about to join this club savings</p>
               <div className="modal-action justify-center">
                 <label onClick={() => setShowJoinModal(false)} htmlFor="my_modal_6" className="btn bg-white text-black">Close!</label>
-                <label onClick={() => joinSavingsClub()} htmlFor="my_modal_" className="btn bg-[#2A0FB1] border border-[#2A0FB1] text-[#fefefe]">Proceed</label>
+                <label onClick={() => joinSavingsClub()} htmlFor="my_modal_" className="btn bg-[#2A0FB1] border border-[#2A0FB1] text-[#fefefe]">{joining ? "Joining" : "Proceed"}</label>
               </div>
             </div>
           </div>
