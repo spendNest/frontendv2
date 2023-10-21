@@ -11,29 +11,42 @@ import factoryAbi from "@/app/auth/abi/factory.json";
 import Auth from "@/app/auth/Auth";
 import { ethers } from "ethers";
 import { factoryAddress } from "@/app/auth/contractAddress";
+import { removeDuplicateObjects } from "@/utils";
 
 export default function SavingsClub() {
   const router = useRouter();
   const [savingLive, setSavingLive] = useState(true);
-  const { childAddress, provider,  } = Auth();
+  const { childAddress, provider, } = Auth();
   const [data, setData] = useState([]);
 
-  const combinedData = data.map((_, index) => data.map((arr) => arr[index]));
-
-console.log('childAddress',childAddress);
   const getData = async () => {
+    let mainData = [];
     const ChildContract = new ethers.Contract(
       factoryAddress,
       factoryAbi,
-      provider.getSigner()
+      provider?.getSigner()
     );
 
     const tx = await ChildContract.showPublicData();
-    setData(tx);
+    for (let index = 0; index < tx.length; index++) {
+      const element = tx[index];
+      const newObject = {}
+      newObject.name = tx[0][0];
+      newObject.startDate = Number(tx[1]);
+      newObject.endDate = Number(tx[2]);
+      newObject.savingsGoal = Number(tx[3]);
+      newObject.totalParticipant = Number(tx[4]);
+      mainData.push(newObject)
+    }
+    localStorage.setItem("publicClubs", JSON.stringify(removeDuplicateObjects(mainData)))
+    console.log(removeDuplicateObjects(mainData))
+    setData(removeDuplicateObjects(mainData));
   };
 
   useEffect(() => {
-    getData();
+    if (Object.values(provider).length > 0) {
+      getData();
+    } else { router.push("/") }
   }, []);
 
   return (
@@ -45,7 +58,7 @@ console.log('childAddress',childAddress);
             className="font-bold cursor-pointer mt-2"
             onClick={() => router.back()}
           />
-          <span className="tracking-[0.08px] text-3xl">Personal Savings</span>
+          <span className="tracking-[0.08px] text-3xl">Savings Club</span>
         </div>
 
         <div className="mt-8 sm:mt-10 mb-10">
@@ -86,7 +99,7 @@ console.log('childAddress',childAddress);
             </Link>
           </div>
           <div className="flex flex-wrap justify-center gap-10 mt-8 text-white">
-            {data[0]?.length === 0 ? (
+            {data.length > 0 && data[0]?.length === 0 ? (
               <div className="flex flex-col">
                 <span className="text-black">
                   No Public Club <span className="font-bold"> Created</span> Yet
@@ -104,10 +117,10 @@ console.log('childAddress',childAddress);
               </div>
             ) : (
               <>
-                {combinedData?.slice(0, 3)?.map((values) => (
-                  <div className="w-full rounded-[8px] border-t md:max-w-[300px]">
+                {data.length > 0 && data?.map((club, index) => (
+                  <div key={index} className="w-full rounded-[8px] border-t md:max-w-[300px]">
                     <Link
-                      href={`/savings/join_club?type=public&name=${values[0]}`}
+                      href={`/savings/join_club?type=public&name=${club?.name}`}
                       className="w-full h-[180px] flex justify-center"
                       style={{ backgroundColor: "rgba(143, 231, 108, 0.50)" }}
                     >
@@ -121,7 +134,7 @@ console.log('childAddress',childAddress);
                     </Link>
 
                     <div className="text-black grid mt-1">
-                      <span className="font-bold text-lg">{values[0]}</span>
+                      <span className="font-bold text-lg">{club?.name}</span>
                       <div className="w-full bg-[#D9D9D9] h-[3px]">
                         <div
                           className="h-full bg-[#0F4880]"
@@ -131,7 +144,7 @@ console.log('childAddress',childAddress);
                       </div>
                       <div className="space-x-2">
                         <span className="text-[14px] font-bold">
-                          {Number(values[4])}
+                          {club.totalParticipant}
                         </span>
                         <span className="text-[12px]">members</span>
                       </div>
@@ -140,59 +153,6 @@ console.log('childAddress',childAddress);
                 ))}
               </>
             )}
-
-            {/* <div className='w-full rounded-[8px] border-t md:max-w-[300px]' >
-              <div className='w-full h-[180px] flex justify-center' style={{ backgroundColor: "rgba(224, 207, 186, 0.50)" }} >
-                <Image
-                  src="/savings/hand_sack.svg"
-                  alt={""}
-                  className="w-full"
-                  width={120}
-                  height={120}
-                />
-              </div>
-
-              <div className='text-black grid mt-1'>
-                <span className='font-bold text-lg'>Rent</span>
-                <div className="w-full bg-[#D9D9D9] h-[3px]">
-                  <div
-                    className="h-full bg-[#0F4880]"
-                    role="progressbar"
-                    style={{ width: `${30}%` }}
-                  ></div>
-                </div>
-                <div className='space-x-2'>
-                  <span className='text-[14px] font-bold'>50</span>
-                  <span className='text-[12px]'>members</span>
-                </div>
-              </div>
-            </div>
-            <div className='w-full rounded-[8px] border-t md:max-w-[300px]' >
-              <div className='w-full h-[180px] flex justify-center' style={{ backgroundColor: "rgba(150, 149, 236, 0.50)" }} >
-                <Image
-                  src="/savings/wallet_saving.svg"
-                  alt={""}
-                  className="w-full"
-                  width={120}
-                  height={120}
-                />
-              </div>
-
-              <div className='text-black grid mt-1'>
-                <span className='font-bold text-lg'>New Business</span>
-                <div className="w-full bg-[#D9D9D9] h-[3px]">
-                  <div
-                    className="h-full bg-[#0F4880]"
-                    role="progressbar"
-                    style={{ width: `${60}%` }}
-                  ></div>
-                </div>
-                <div className='space-x-2'>
-                  <span className='text-[14px] font-bold'>40</span>
-                  <span className='text-[12px]'>members</span>
-                </div>
-              </div>
-            </div> */}
           </div>
         </div>
 

@@ -6,25 +6,28 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import childAbi from "@/app/auth/abi/child.json";
+import { useRouter } from 'next/navigation'
 
 export default function SavingsFeatures() {
   const [pSavings, setPSavings] = useState("")
-  const {childAddress, provider} = Auth()
-  const ChildContract = new ethers.Contract(
-    childAddress,
-    childAbi,
-    provider.getSigner()
-  );
-const personalSavings = async () =>{
+  const router = useRouter()
+  const { childAddress, provider } = Auth()
 
-  const tx = await ChildContract.myPersonalSavings();
-  setPSavings(tx)
+  useEffect(() => {
+    if (Object.values(provider).length > 0) {
+      const ChildContract = new ethers.Contract(
+        childAddress,
+        childAbi,
+        provider?.getSigner()
+      );
+      const personalSavings = async () => {
+        const tx = await ChildContract.myPersonalSavings();
+        setPSavings(tx)
+      }
+      personalSavings()
+    } else { router.push("/") }
+  }, []);
 
-  console.log('sav',Number(pSavings));
-}
-useEffect(()=>{
-  personalSavings()
-},[])
   return (
     <Layout>
       <div className='pt-20 pb-5'>
