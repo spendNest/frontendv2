@@ -81,7 +81,7 @@ getData()
 {
   combinedData?.slice(0, 3)?.map((values)=>(
     <div className='w-full rounded-[8px] border-t md:max-w-[300px]' >
-    <div className='w-full h-[180px] flex justify-center' style={{ backgroundColor: "rgba(143, 231, 108, 0.50)" }} >
+    <Link href={`/savings/join_club?type=public&name=${values[0]}`} className='w-full h-[180px] flex justify-center' style={{ backgroundColor: "rgba(143, 231, 108, 0.50)" }} >
       <Image
         src="/savings/dollar_coins.svg"
         alt={""}
@@ -89,7 +89,7 @@ getData()
         width={120}
         height={120}
       />
-    </div>
+    </Link>
 
     <div className='text-black grid mt-1'>
       <span className='font-bold text-lg'>{values[0]}</span>
