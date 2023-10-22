@@ -1,3 +1,5 @@
+import { ethers } from "ethers"
+
 export const explore_cards = [
 
   {
@@ -24,6 +26,23 @@ export const explore_cards = [
     name: "Amount to be Payed back",
     bgCustom: "/third_pattern.svg"
   }
+]
+export const overdraft_cards = [
+  {
+    name: "Current Limit",
+    amount: 65.00,
+    color: "#2A0FB1"
+  },
+  {
+    name: "Current Overdraft",
+    amount: 0.00,
+    color: "#C27810"
+  },
+  {
+    name: "Available Overdraft",
+    amount: 65.00,
+    color: "#49BE1B"
+  },
 ]
 
 export const glasses = [
@@ -132,4 +151,14 @@ export function formatDate(timestamp) {
   const dayWithSuffix = day + (day % 10 === 1 && day !== 11 ? 'st' : day % 10 === 2 && day !== 12 ? 'nd' : day % 10 === 3 && day !== 13 ? 'rd' : 'th');
 
   return formattedDate.replace(String(day), dayWithSuffix);
+}
+
+export function formatUSDT(val) {
+  const formatVal = ethers.utils.formatUnits(val, 6)
+  return formatVal;
+}
+
+export function getEightPercent(val) {
+  const data = (val * 8) / 100
+  return data;
 }

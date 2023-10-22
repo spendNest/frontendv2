@@ -24,8 +24,7 @@ const JoinPublicClub = () => {
     const Data = JSON.parse(localStorage.getItem("publicClubs"))
     const mainData = Data.filter((item) => item.name === name)
 
-    console.log(mainData)
-    setData(mainData);
+    setData(mainData[0]);
   };
   // const getData = async () => {
   //   const ChildContract = new ethers.Contract(

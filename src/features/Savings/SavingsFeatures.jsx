@@ -7,6 +7,7 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import childAbi from "@/app/auth/abi/child.json";
 import { useRouter } from 'next/navigation'
+import { formatUSDT } from '@/utils'
 
 export default function SavingsFeatures() {
   const [pSavings, setPSavings] = useState("")
@@ -44,7 +45,7 @@ export default function SavingsFeatures() {
             </div>
             <p className='text-[#2A0FB1] text-lg font-bold'>Personal Savings</p>
             <span className='grotesk_font text-[base] tracking-[0.085px] leading-5 my-2 block'>Flexible savings for emergencies, Free transfers, withdrawals</span>
-            <span className='text-[#2A0FB1] text-xl font-bold'>$65.09</span>
+            <span className='text-[#2A0FB1] text-xl font-bold'>${pSavings !== "" && formatUSDT(pSavings)}</span>
           </Link>
           <Link href="/savings/club" className="inline-block savings_club p-6 hover:cursor-pointer">
             <div className='w-14 h-14 p-1'>

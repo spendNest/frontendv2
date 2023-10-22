@@ -19,35 +19,34 @@ export default function SavingsClub() {
   const { childAddress, provider, } = Auth();
   const [data, setData] = useState([]);
 
-  const getData = async () => {
-    let mainData = [];
-    const ChildContract = new ethers.Contract(
-      factoryAddress,
-      factoryAbi,
-      provider?.getSigner()
-    );
-
-    const tx = await ChildContract.showPublicData();
-    for (let index = 0; index < tx.length; index++) {
-      const element = tx[index];
-      const newObject = {}
-      newObject.name = tx[0][0];
-      newObject.startDate = Number(tx[1]);
-      newObject.endDate = Number(tx[2]);
-      newObject.savingsGoal = Number(tx[3]);
-      newObject.totalParticipant = Number(tx[4]);
-      mainData.push(newObject)
-    }
-    localStorage.setItem("publicClubs", JSON.stringify(removeDuplicateObjects(mainData)))
-    console.log(removeDuplicateObjects(mainData))
-    setData(removeDuplicateObjects(mainData));
-  };
-
   useEffect(() => {
     if (Object.values(provider).length > 0) {
+      // const ChildContract = new ethers.Contract(childAddress, childAbi, provider?.getSigner());
+      const ChildContract = new ethers.Contract(
+        factoryAddress,
+        factoryAbi,
+        provider?.getSigner()
+      );
+      const getData = async () => {
+        let mainData = [];
+
+        const tx = await ChildContract.showPublicData();
+        for (let index = 0; index < tx.length; index++) {
+          const element = tx[index];
+          const newObject = {}
+          newObject.name = tx[0][0];
+          newObject.startDate = Number(tx[1]);
+          newObject.endDate = Number(tx[2]);
+          newObject.savingsGoal = Number(tx[3]);
+          newObject.totalParticipant = Number(tx[4]);
+          mainData.push(newObject)
+        }
+        localStorage.setItem("publicClubs", JSON.stringify(removeDuplicateObjects(mainData)))
+        setData(removeDuplicateObjects(mainData));
+      };
       getData();
     } else { router.push("/") }
-  }, []);
+  }, [provider]);
 
   return (
     <Layout>

@@ -34,7 +34,7 @@ export default function BetweenAccTransferForm() {
       toast.error("Transaction successful")
     } catch (error) {
       setSending(false)
-      toast.error("Transaction failed")
+      toast.error(error?.reason ? error.reason : 'Transaction Failed')
     }
     // console.log(txResponse.error);
   };
