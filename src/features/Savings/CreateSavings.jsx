@@ -4,18 +4,22 @@ import childAbi from "@/app/auth/abi/child.json";
 import { generateQuarterlyDates } from '@/utils'
 import { ethers } from 'ethers'
 import Auth from '@/app/auth/Auth'
+import { toast } from 'react-toastify';
 
 const CreateSavings = () => {
   const {childAddress, provider} = Auth()
 
   const [privateType, setPrivateType] = useState(true)
   const [name, setName] =useState('')
-  const [target, setTarget] =useState()
-  const [stDate, setStDate] =useState()
-  const [endDate, setEndDate] =useState()
+  const [target, setTarget] =useState('')
+  const [stDate, setStDate] =useState('')
+  const [endDate, setEndDate] =useState('')
+  const [loading, setLoading] =useState(false)
+
 
   const submitForm=async(e)=>{
     console.log('clicked')
+    setLoading(true)
     e.preventDefault();
 
     const ChildContract = new ethers.Contract(
@@ -32,19 +36,29 @@ const CreateSavings = () => {
    let epochTimeSeconds1=Math.floor(epochTime1/1000);
 
   
-   
+   try {
+    if(privateType){
 
-if(privateType){
+      const tx = await ChildContract.createPersonalSavingsClub(name,  epochTimeSeconds1, target);
+    
+      const txResponse = await tx.wait();
+      console.log(txResponse);
+    }
+    else{
+    
+      const tx = await ChildContract.createPublicSav(name, epochTimeSeconds, epochTimeSeconds1, target);
+    
+      const txResponse = await tx.wait();
+      console.log(txResponse);
+      toast.success("Transaction Successful")
+    }
+    setLoading(false)
+   } catch (error) {
+    toast.error(error.reason)
+    console.log(error.reason)
+   }
 
-  const tx = await ChildContract.createPersonalSavingsClub(name,  epochTimeSeconds1, target);
 
-  const txResponse = await tx.wait();
-  console.log(txResponse);
-}
-    const tx = await ChildContract.createPublicSav(name, epochTimeSeconds, epochTimeSeconds1, target);
-
-    const txResponse = await tx.wait();
-    console.log(txResponse);
 
 
 
@@ -135,7 +149,7 @@ if(privateType){
         </div>
 
         <button onClick={submitForm} className="w-[360px] h-[58px] rounded-lg bg-[#2A0FB1] text-[#FEFEFE] text-[17px] block mx-auto leading-[25.5px] tracking-[0.5%] mt-[80px] ">
-          Create Savings Club
+         { loading ? 'Creating...' :'Create Savings Club'}
         </button>
       </div>
     </Layout>

@@ -11,7 +11,7 @@ export default function PersonalSavingsAction() {
 
   const router = useRouter()
   const searchParams = useSearchParams()
-  const [amountVal, setAmountVal] = useState();
+  const [amountVal, setAmountVal] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { childAddress, provider } = Auth()
 

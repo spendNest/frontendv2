@@ -14,7 +14,7 @@ const ExternalWalletFund = () => {
   const router = useRouter()
   const [showModal, setShowModal] = useState()
   const { childAddress, provider, address } = Auth();
-  const [amountVal, setAmountVal] = useState()
+  const [amountVal, setAmountVal] = useState('')
   const [sending, setSending] = useState(false)
 
   const setModal = () => {
@@ -44,7 +44,7 @@ const ExternalWalletFund = () => {
 
       const app = await approve.wait();
       console.log(app)
-      const tx = await ChildContract.depositFund(Number(amountVal))
+      const tx = await ChildContract.depositFund(Number(amountVal * 1000000))
 
       await tx.wait();
       toast.success("transaction successful")
