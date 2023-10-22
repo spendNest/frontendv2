@@ -3,6 +3,7 @@ import { AiOutlineClose } from 'react-icons/ai'
 import Auth from '@/app/auth/Auth'
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function Home() {
   const { createWallet, isLoading, isConnected } = Auth();
@@ -18,9 +19,9 @@ export default function Home() {
       <section className="w-[50%] h-[400px] bg-[#D2E9FF] mx-auto rounded-[40px] mt-[150px]">
         <div className="">
           <div className="w-[90%] mx-auto flex justify-end pt-5">
-            <div className="bg-[white] w-[36px] h-[36px] rounded-full flex items-center justify-center ">
+            <Link href='https://spendnest.framer.website/'className="bg-[white] w-[36px] h-[36px] rounded-full flex items-center justify-center cursor-pointer ">
               <AiOutlineClose size={24} />
-            </div>
+            </Link>
           </div>
 
           <div className="w-[90%] mx-auto mt-6">
