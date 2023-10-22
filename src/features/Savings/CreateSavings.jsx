@@ -5,8 +5,10 @@ import { generateQuarterlyDates } from '@/utils'
 import { ethers } from 'ethers'
 import Auth from '@/app/auth/Auth'
 import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 
 const CreateSavings = () => {
+  const router = useRouter()
   const {childAddress, provider} = Auth()
 
   const [privateType, setPrivateType] = useState(true)
@@ -51,8 +53,8 @@ const CreateSavings = () => {
       const txResponse = await tx.wait();
       console.log(txResponse);
     }
-    router.push("/savings/club")
     toast.success("Transaction Successful")
+    router.push("/savings/club")
     setLoading(false)
    } catch (error) {
     toast.error(error.reason)
