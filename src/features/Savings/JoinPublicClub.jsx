@@ -42,9 +42,8 @@ const JoinPublicClub = () => {
       toast.error("Joining Club Failed")
     }
   }
-  function convertEpochToDate(epochTimeInSeconds) {
-    const date = new Date(0);
-    date.setUTCSeconds(epochTimeInSeconds);
+  function convertEpochToDate(epochTimeInMilliseconds) {
+    const date = new Date(epochTimeInMilliseconds);
     return date;
   }
   return (
@@ -109,7 +108,7 @@ const JoinPublicClub = () => {
       <div className='flex flex-wrap gap-4 mt-16'>
         <div className='grid bg-[#D2E9FF] p-2 w-[300px] rounded-md'>
           <span className='text-[17px]'>Start Date</span>
-          <span className='text-[20px] font-bold text-black'>{convertEpochToDate(Number(data[1]))}</span>
+          <span className='text-[20px] font-bold text-black'>{new Date(Number(data[1]))}</span>
         </div>
         <div className='grid bg-[#D2E9FF] p-2 w-[300px] rounded-md'>
           <span className='text-[17px]'>Withdrawal Date</span>
