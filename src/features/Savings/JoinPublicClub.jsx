@@ -22,6 +22,7 @@ const JoinPublicClub = () => {
   const [data, setData] = useState([]);
   const [status, setStatus] = useState(false);
   const [amount, setAmount] = useState('')
+  const [fund, setFund] = useState(0)
 
   const getData = async () => {
     const Data = JSON.parse(localStorage.getItem("publicClubs"))
@@ -42,11 +43,27 @@ const JoinPublicClub = () => {
     setStatus(tx);
   };
 
+  const checkFund = async () => {
+    const ChildContract = new ethers.Contract(
+      childAddress,
+      childAbi,
+      provider.getSigner()
+    );
+
+    const tx = await ChildContract.getPublicClubFund(name);
+    setFund(tx);
+  };
+
+
   useEffect(() => {
     getData();
     checkMember()
+    checkFund()
   }, []);
 
+
+
+ 
   const joinSavingsClub = async () => {
     try {
       setJoining(true)
@@ -66,6 +83,7 @@ const JoinPublicClub = () => {
       toast.error(error.reason ? error.reason : "Failed to Join")
     }
   }
+
 
  
   const DepositSavingsClub = async () => {
@@ -107,7 +125,7 @@ const JoinPublicClub = () => {
             </div>
             <span className='font-bold text-lg'>{data.name}</span>
           </div>
-          {/* _clubName, _startDate, _endDate, _savingsGoal, _totalParticipant */}
+          
 
           <div className='flex items-center gap-3'>
             <div className="w-[200px] bg-[#D9D9D9] h-[3px]">
@@ -126,11 +144,12 @@ const JoinPublicClub = () => {
           {/* <div className='grid'>
             <span className='text-[17px] font-bold'>$15,802.00</span>
             <span className='text-[20px]'>Total saved</span>
-          </div>
-          <div className='grid'>
-            <span className='text-[17px] font-bold'>$200</span>
-            <span className='text-[20px]'>per members</span>
           </div> */}
+
+          <div className='grid'>
+            <span className='text-[17px] font-bold'>${Number(fund)}</span>
+            <span className='text-[20px]'>My Savings</span>
+          </div>
         </div>
 
         {/* Payout */}
@@ -187,10 +206,8 @@ const JoinPublicClub = () => {
               <p className="py-4">You are about to join this club savings</p>
               <div className="modal-action justify-center">
                 <label onClick={() => setShowJoinModal(false)} htmlFor="my_modal_6" className="btn bg-white text-black">Close!</label>
-                <label onClick={() => DepositSavingsClub()} htmlFor="my_modal_" className="btn bg-[#2A0FB1] border border-[#2A0FB1] text-[#fefefe]">{joining ? "Joining" : "Proceed"}</label>
-                <label 
-                // onClick={() => joinSavingsClub()} 
-                htmlFor="my_modal_" className="btn bg-[#2A0FB1] border border-[#2A0FB1] text-[#fefefe]">Deposit</label>
+                <label onClick={() => joinSavingsClub()} htmlFor="my_modal_" className="btn bg-[#2A0FB1] border border-[#2A0FB1] text-[#fefefe]">{joining ? "Joining" : "Proceed"}</label>
+               
               </div>
             </div>
           </div>

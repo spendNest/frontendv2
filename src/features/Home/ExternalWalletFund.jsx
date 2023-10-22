@@ -46,9 +46,10 @@ const ExternalWalletFund = () => {
       console.log(app)
       const tx = await ChildContract.depositFund(Number(amountVal))
 
-      const txResponse = await tx.wait();
+      await tx.wait();
       toast.success("transaction successful")
       setShowModal(false)
+      setSending(false)
       // console.log(txResponse.error);
 
     } catch (error) {
@@ -69,7 +70,7 @@ const ExternalWalletFund = () => {
           />
           <div className='grid space-y-2'>
             <span className='tracking-[0.08px] text-3xl'>SpendNest Basic Account</span>
-            <span className='text-base pt-2'>yrh899kfjryhhgfj948jdj</span>
+            <span className='text-base pt-2'>{childAddress}</span>
           </div>
         </div>
 
@@ -77,7 +78,7 @@ const ExternalWalletFund = () => {
           <div className='w-full space-y-8 lg:space-y-0 lg:flex items-center md:justify-between min-w-[305px]'>
             <div className='inline-grid text-base text-[#696969] grotesk_font gap-2'>
               <span className='text-[#0F4880] text-lg mb-2 block'>External Wallet</span>
-              <span className='grotesk_font text-[17px]'>From external wallet address</span>
+              <span className='grotesk_font text-[17px]'>From wallet address:{address}</span>
               <span className='grotesk_font text-[17px]'>Fee-1% Automatically deducted</span>
             </div>
 
