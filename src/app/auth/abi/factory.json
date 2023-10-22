@@ -1,5 +1,24 @@
 [
   {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "creator",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "factory",
+        "type": "address"
+      }
+    ],
+    "name": "AccountCreated",
+    "type": "event"
+  },
+  {
     "inputs": [
       { "internalType": "address", "name": "_contractOwner", "type": "address" }
     ],

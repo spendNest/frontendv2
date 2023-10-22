@@ -9,9 +9,12 @@ import Link from 'next/link'
 import Auth from '@/app/auth/Auth'
 import { ethers } from 'ethers'
 import childAbi from "@/app/auth/abi/child.json";
-import { formatUSDT } from '@/utils'
+import { formatDate, formatUSDT } from '@/utils'
+import { gql, useQuery } from 'urql';
 
 export default function PersonalSavings() {
+
+
   const router = useRouter()
   const [pSavings, setPSavings] = useState()
   const { childAddress, provider } = Auth()
@@ -29,6 +32,29 @@ export default function PersonalSavings() {
       router.push('/');
     }
   }, [])
+  const TodosQuery = gql`
+  {
+    personalClubDeposits {
+      amount
+      id
+      sender
+      time
+    },
+    
+    savingsWithdrawns {
+      amount
+      id
+      time
+      transactionHash
+      sender
+  }
+}
+  `;
+  const [result, reexecuteQuery] = useQuery({
+    query: TodosQuery,
+  });
+
+  const { data, fetching, error } = result;
 
   return (
     <Layout>
@@ -54,7 +80,7 @@ export default function PersonalSavings() {
               />
             </div>
             <p className='text-[#2A0FB1] text-lg font-bold mb-2'>Personal Savings</p>
-            <span className='text-[#2A0FB1] text-xl font-bold'>${pSavings !== "" && formatUSDT(pSavings)}</span>
+            <span className='text-[#2A0FB1] text-xl font-bold'>${pSavings !== "" && Number(pSavings)/1000000}</span>
           </div>
           <div className="personal_savings_card p-6 flex flex-col justify-between w-full md:w-[50%]">
             <span className='text-base tracking-[0.085px] leading-5'>Flexible savings for emergencies, Free transfers, withdrawals.</span>
@@ -93,11 +119,11 @@ export default function PersonalSavings() {
         <div className='pt-10'>
           <span className='font-bold text-lg'>Recent Activities</span>
 
-          {[1, 2].map((i, j) => (
+          {data?.personalClubDeposits?.map((i, j) => (
             <div key={j} className='my-6 p-4 transaction-card w-full'>
               <div className='w-full min-w-[305px]'>
                 <div className='flex items-center justify-between w-full text-base text-[#696969] grotesk_font gap-2'>
-                  <span>16th October</span>
+                  <span>{formatDate(i.time)}</span>
                 </div>
 
                 <div className='flex items-center'>
@@ -113,11 +139,42 @@ export default function PersonalSavings() {
                     </div>
 
                     <div className='grid'>
-                      <span className='text-[14px]'>{i === 1 ? "Amount Added" : "Withdrawal Made"}</span>
+                      <span className='text-[14px]'>{ "Amount Added" }</span>
                     </div>
                   </div>
                   <div className='block text-end w-full gap-4'>
-                    <span className={`${i === 1 ? "text-[#00C11F]" : "text-[#C10000]"} block text-end font-normal text-lg`}>{i === 1 ? "$47.00" : "$20.23"}</span>
+                    <span className={`${i === 1 ? "text-[#00C11F]" : "text-[#C10000]"} block text-end font-normal text-lg`}>{i.amount/1000000}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+
+          {data?.savingsWithdrawns?.map((i, j) => (
+            <div key={j} className='my-6 p-4 transaction-card w-full'>
+              <div className='w-full min-w-[305px]'>
+                <div className='flex items-center justify-between w-full text-base text-[#696969] grotesk_font gap-2'>
+                  <span>{formatDate(i.time)}</span>
+                </div>
+
+                <div className='flex items-center'>
+                  <div className='flex items-center w-full gap-4'>
+                    <div className='w-10 h-10 p-1'>
+                      <Image
+                        src="/savings/personal_savings.svg"
+                        alt={""}
+                        className="object-cover w-full"
+                        width={20}
+                        height={20}
+                      />
+                    </div>
+
+                    <div className='grid'>
+                      <span className='text-[14px]'>{ "Amount Withdrawn" }</span>
+                    </div>
+                  </div>
+                  <div className='block text-end w-full gap-4'>
+                    <span className={`${i === 1 ? "text-[#00C11F]" : "text-[#C10000]"} block text-end font-normal text-lg`}>{i.amount/1000000}</span>
                   </div>
                 </div>
               </div>

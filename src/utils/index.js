@@ -154,7 +154,7 @@ export function formatDate(timestamp) {
 }
 
 export function formatUSDT(val) {
-  const formatVal = ethers.utils.formatUnits(val, 6)
+  const formatVal = ethers.utils.formatUnits(Number(val), 6)
   return formatVal;
 }
 

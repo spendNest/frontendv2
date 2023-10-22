@@ -1,6 +1,11 @@
 "use client"
 import React, { createContext, useContext, useState } from 'react'
+import { Client, Provider, cacheExchange, fetchExchange } from 'urql';
 
+const client = new Client({
+  url: 'https://api.studio.thegraph.com/query/56209/spendnest/version/latest',
+  exchanges: [cacheExchange, fetchExchange],
+});
 
 const AppContext = createContext();
 
@@ -16,7 +21,10 @@ function AppProvider({ children }) {
   const [childAddress, setChildAddress] = useState("");
 
   return (
-    <AppContext.Provider value={{ wallet, setWallet, setProvider, provider, errMessage, setErrMessage, address, setAddress, isLoading, setIsLoading, isConnected, setIsConnected, factoryContract, setFactoryContract, childAddress, setChildAddress, sidebar, setSideBar }}>{children}</AppContext.Provider>
+    <Provider value={client}>
+
+      <AppContext.Provider value={{ wallet, setWallet, setProvider, provider, errMessage, setErrMessage, address, setAddress, isLoading, setIsLoading, isConnected, setIsConnected, factoryContract, setFactoryContract, childAddress, setChildAddress, sidebar, setSideBar }}>{children}</AppContext.Provider>
+    </Provider>
   )
 }
 

@@ -17,11 +17,8 @@ const OverdraftAction = () => {
   const [sending, setSending] = useState(false)
 
   const overdraftAct = async (e) => {
-    if (amountVal === undefined) {
-      toast.error('Invalid amount');
-      return;
-    }
-    setSending(true);
+  
+   
     try {
       e.preventDefault();
 
@@ -32,12 +29,19 @@ const OverdraftAction = () => {
       );
 
       if (type === "repay") {
+        setSending(true);
         const tx = await ChildContract.payback();
         await tx.wait();
         setSending(false)
-        toast.success("Transaction successful")
+        toast.success("OverDraft Paid")
       }
       else {
+
+        if (amountVal === undefined) {
+          toast.error('Invalid amount');
+          return;
+        }
+        setSending(true);
         const tx = await ChildContract.lend(Number(amountVal) * 1000000);
         await tx.wait();
         setSending(false)
@@ -46,7 +50,7 @@ const OverdraftAction = () => {
       }
     } catch (error) {
       setSending(false)
-      toast.error(error?.reason ? error.reason : 'Transaction Failed')
+      toast.error(error.reason ? error.reason : 'Transaction Failed')
       console.log(error);
     }
   };
@@ -72,7 +76,7 @@ const OverdraftAction = () => {
               </p>
               <input
                 type="text"
-                placeholder="0.00"
+                placeholder={type === "repay" ? "Amount Calculated Automatically" : "0.00"}
                 value={amountVal}
                 onChange={(e) => setAmountVal(e.target.value)}
                 className="text-[20px] head2 input bg-white text-black w-full focus:outline-none outline-none"
@@ -84,9 +88,9 @@ const OverdraftAction = () => {
             <div className='grid space-y-2 w-full'>
               <label>Pay from</label>
               <select className="select select-bordered w-full max-w-full bg-white">
-                <option disabled selected>Select Option?</option>
+                <option disabled selected>Basic Account</option>
                 <option>Basic Account</option>
-                <option>External Wallet</option>
+                {/* <option>External Wallet</option> */}
               </select>
             </div> :
             <div className='flex items-center justify-between bg-[#D2E9FF] p-3 w-full rounded-lg'>
