@@ -50,8 +50,9 @@ const CreateSavings = () => {
     
       const txResponse = await tx.wait();
       console.log(txResponse);
-      toast.success("Transaction Successful")
     }
+    router.push("/savings/club")
+    toast.success("Transaction Successful")
     setLoading(false)
    } catch (error) {
     toast.error(error.reason)
