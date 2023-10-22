@@ -19,6 +19,7 @@ export default function SavingsClub() {
   const { childAddress, provider, } = Auth();
   const [data, setData] = useState([]);
 
+  console.log(data)
   useEffect(() => {
     if (Object.values(provider).length > 0) {
       // const ChildContract = new ethers.Contract(childAddress, childAbi, provider?.getSigner());
@@ -143,7 +144,7 @@ export default function SavingsClub() {
                       </div>
                       <div className="space-x-2">
                         <span className="text-[14px] font-bold">
-                          {club.totalParticipant}
+                          {Number(club?.totalParticipant)}
                         </span>
                         <span className="text-[12px]">members</span>
                       </div>

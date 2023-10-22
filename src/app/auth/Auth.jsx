@@ -83,7 +83,7 @@ export default function Auth() {
 
         const tx = await FactoryContract.createAccount();
         // setTransactionSended(tx);
-        const txResponse = await tx.wait();
+       await tx.wait();
 
         if (Object.values(instanceProvider).length > 0) {
           setProvider(instanceProvider);
@@ -102,11 +102,14 @@ export default function Auth() {
           }),
         })
         setChildAddress(tx);
+        console.log(tx2)
+        console.log('completed');
       }
       setWallet(instance);
       setIsConnected(true);
       setIsLoading(false);
       console.log("trans complete");
+      
     } catch (error) {
       setErrMessage(error.message);
       console.log("error", error.message);

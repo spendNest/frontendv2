@@ -8,8 +8,8 @@ import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 
 const CreateSavings = () => {
-  const router = useRouter()
   const {childAddress, provider} = Auth()
+  // const router = useRouter()
 
   const [privateType, setPrivateType] = useState(true)
   const [name, setName] =useState('')
@@ -54,7 +54,7 @@ const CreateSavings = () => {
       console.log(txResponse);
     }
     toast.success("Transaction Successful")
-    router.push("/savings/club")
+    // router.push("/savings/club")
     setLoading(false)
    } catch (error) {
     toast.error(error.reason)
