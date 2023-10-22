@@ -3,7 +3,6 @@ import { Dialog, Transition } from '@headlessui/react'
 import Auth from "@/app/auth/Auth";
 import { coins } from '@/utils';
 import Image from 'next/image';
-import { isNull } from 'util';
 
 
 export const Modal = ({ sending, txnId, amount, setShowModal, Fund }) => {

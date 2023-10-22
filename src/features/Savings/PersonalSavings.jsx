@@ -9,6 +9,7 @@ import Link from 'next/link'
 import Auth from '@/app/auth/Auth'
 import { ethers } from 'ethers'
 import childAbi from "@/app/auth/abi/child.json";
+import { formatUSDT } from '@/utils'
 
 export default function PersonalSavings() {
   const router = useRouter()
@@ -21,12 +22,12 @@ export default function PersonalSavings() {
       const personalSavings = async () => {
         const tx = await ChildContract.myPersonalSavings();
         setPSavings(tx)
+        console.log(tx)
       }
       personalSavings();
     } else {
       router.push('/');
     }
-    console.log('sav', pSavings);
   }, [])
 
   return (
@@ -53,7 +54,7 @@ export default function PersonalSavings() {
               />
             </div>
             <p className='text-[#2A0FB1] text-lg font-bold mb-2'>Personal Savings</p>
-            <span className='text-[#2A0FB1] text-xl font-bold'>$65.80</span>
+            <span className='text-[#2A0FB1] text-xl font-bold'>${pSavings !== "" && formatUSDT(pSavings)}</span>
           </div>
           <div className="personal_savings_card p-6 flex flex-col justify-between w-full md:w-[50%]">
             <span className='text-base tracking-[0.085px] leading-5'>Flexible savings for emergencies, Free transfers, withdrawals.</span>

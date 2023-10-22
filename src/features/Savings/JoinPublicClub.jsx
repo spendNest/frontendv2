@@ -7,45 +7,63 @@ import Auth from "@/app/auth/Auth";
 import { ethers } from "ethers";
 import { factoryAddress } from "@/app/auth/contractAddress";
 import factoryAbi from "@/app/auth/abi/factory.json";
+import childAbi from "@/app/auth/abi/child.json";
+import { formatDate, returnPercentage } from '@/utils'
 
 const JoinPublicClub = () => {
   const router = useRouter()
-  const searchParams =useSearchParams()
+  const searchParams = useSearchParams()
 
   const name = searchParams.get('name')
   const [showJoinModal, setShowJoinModal] = useState(false)
+  const [joining, setJoining] = useState(false)
   const { childAddress, provider } = Auth();
   const [data, setData] = useState([]);
-  
+
   const getData = async () => {
-    const ChildContract = new ethers.Contract(
-      factoryAddress,
-      factoryAbi,
-      provider.getSigner()
-      );
-      
-      const tx = await ChildContract.viewSinglePublic(name);
-      setData(tx);
-    };
-    console.log(data)
+    const Data = JSON.parse(localStorage.getItem("publicClubs"))
+    const mainData = Data.filter((item) => item.name === name)
+
+    setData(mainData[0]);
+  };
+  // const getData = async () => {
+  //   const ChildContract = new ethers.Contract(
+  //     factoryAddress,
+  //     factoryAbi,
+  //     provider.getSigner()
+  //   );
+
+  //   const tx = await ChildContract.viewSinglePublic(name);
+  //   setData(tx);
+  // };
 
   useEffect(() => {
     getData();
   }, []);
 
-
-  const joinSavingsClub = () => {
+  const joinSavingsClub = async () => {
     try {
-      console.log("working")
+      setJoining(true)
+      const ChildContract = new ethers.Contract(
+        childAddress,
+        childAbi,
+        provider.getSigner()
+      );
+      await ChildContract.joinPublicClub(name);
+      setJoining(false)
+      toast.success(`Joined ${name} successful`)
+      setShowJoinModal(false)
     } catch (error) {
       console.log(error)
-      toast.error("Joining Club Failed")
+      setJoining(false)
+      setShowJoinModal(false)
+      toast.error(error.reason ? error.reason : "Failed to Join")
     }
   }
-  function convertEpochToDate(epochTimeInMilliseconds) {
-    const date = new Date(epochTimeInMilliseconds);
-    return date;
-  }
+
+  useEffect(() => {
+    getData();
+  }, []);
   return (
     <Layout>
       <div className='pt-20 pb-5 text-black'>
@@ -60,7 +78,7 @@ const JoinPublicClub = () => {
                 height={80}
               />
             </div>
-            <span className='font-bold text-lg'>{data[0]}</span>
+            <span className='font-bold text-lg'>{data.name}</span>
           </div>
           {/* _clubName, _startDate, _endDate, _savingsGoal, _totalParticipant */}
 
@@ -69,23 +87,23 @@ const JoinPublicClub = () => {
               <div
                 className="h-full bg-[#0F4880]"
                 role="progressbar"
-                style={{ width: `${10}%` }}
+                style={{ width: `${returnPercentage(data.startDate, data.endDate)}%` }}
               ></div>
             </div>
-            <span>17%</span>
+            <span>{returnPercentage(data.startDate, data.endDate).toFixed(2)}%</span>
           </div>
           <div className='grid'>
-            <span className='text-[17px] font-bold'>{Number(data[4])}</span>
+            <span className='text-[17px] font-bold'>{data.totalParticipant}</span>
             <span className='text-[20px]'>members</span>
           </div>
-          <div className='grid'>
+          {/* <div className='grid'>
             <span className='text-[17px] font-bold'>$15,802.00</span>
             <span className='text-[20px]'>Total saved</span>
           </div>
           <div className='grid'>
             <span className='text-[17px] font-bold'>$200</span>
             <span className='text-[20px]'>per members</span>
-          </div>
+          </div> */}
         </div>
 
         {/* Payout */}
@@ -108,15 +126,11 @@ const JoinPublicClub = () => {
       <div className='flex flex-wrap gap-4 mt-16'>
         <div className='grid bg-[#D2E9FF] p-2 w-[300px] rounded-md'>
           <span className='text-[17px]'>Start Date</span>
-          <span className='text-[20px] font-bold text-black'>{new Date(Number(data[1]))}</span>
+          <span className='text-[20px] font-bold text-black'>{formatDate(data.startDate)}</span>
         </div>
         <div className='grid bg-[#D2E9FF] p-2 w-[300px] rounded-md'>
           <span className='text-[17px]'>Withdrawal Date</span>
-          <span className='text-[20px] font-bold text-black'>{Number(data[2])}</span>
-        </div>
-        <div className='grid bg-[#D2E9FF] p-2 w-[300px] rounded-md'>
-          <span className='text-[17px]'>Target Per Member</span>
-          <span className='text-[20px] font-bold text-black'>$ {Number(data[3])}</span>
+          <span className='text-[20px] font-bold text-black'>{formatDate(data.endDate)}</span>
         </div>
         <div className='grid bg-[#D2E9FF] p-2 w-[300px] rounded-md'>
           <span className='text-[17px]'>Interest Per Annum</span>
@@ -134,7 +148,7 @@ const JoinPublicClub = () => {
               <p className="py-4">You are about to join this club savings</p>
               <div className="modal-action justify-center">
                 <label onClick={() => setShowJoinModal(false)} htmlFor="my_modal_6" className="btn bg-white text-black">Close!</label>
-                <label onClick={() => joinSavingsClub()} htmlFor="my_modal_" className="btn bg-[#2A0FB1] border border-[#2A0FB1] text-[#fefefe]">Proceed</label>
+                <label onClick={() => joinSavingsClub()} htmlFor="my_modal_" className="btn bg-[#2A0FB1] border border-[#2A0FB1] text-[#fefefe]">{joining ? "Joining" : "Proceed"}</label>
               </div>
             </div>
           </div>
