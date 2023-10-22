@@ -16,9 +16,12 @@ const JoinPublicClub = () => {
 
   const name = searchParams.get('name')
   const [showJoinModal, setShowJoinModal] = useState(false)
+  const [showDepositModal, setShowDepositModal] = useState(false)
   const [joining, setJoining] = useState(false)
-  const { childAddress, provider } = Auth();
+  const { childAddress, provider, address } = Auth();
   const [data, setData] = useState([]);
+  const [status, setStatus] = useState(false);
+  const [amount, setAmount] = useState('')
 
   const getData = async () => {
     const Data = JSON.parse(localStorage.getItem("publicClubs"))
@@ -26,19 +29,22 @@ const JoinPublicClub = () => {
 
     setData(mainData[0]);
   };
-  // const getData = async () => {
-  //   const ChildContract = new ethers.Contract(
-  //     factoryAddress,
-  //     factoryAbi,
-  //     provider.getSigner()
-  //   );
 
-  //   const tx = await ChildContract.viewSinglePublic(name);
-  //   setData(tx);
-  // };
+
+  const checkMember = async () => {
+    const ChildContract = new ethers.Contract(
+      childAddress,
+      childAbi,
+      provider.getSigner()
+    );
+
+    const tx = await ChildContract.memberPublicClub(name);
+    setStatus(tx);
+  };
 
   useEffect(() => {
     getData();
+    checkMember()
   }, []);
 
   const joinSavingsClub = async () => {
@@ -58,6 +64,27 @@ const JoinPublicClub = () => {
       setJoining(false)
       setShowJoinModal(false)
       toast.error(error.reason ? error.reason : "Failed to Join")
+    }
+  }
+
+ 
+  const DepositSavingsClub = async () => {
+    try {
+      setJoining(true)
+      const ChildContract = new ethers.Contract(
+        childAddress,
+        childAbi,
+        provider.getSigner()
+      );
+      await ChildContract.addFundpublic(name, Number(amount * 1000000));
+      setJoining(false)
+      toast.success(`Deposit ${amount} successful`)
+      setShowJoinModal(false)
+    } catch (error) {
+      console.log(error)
+      setJoining(false)
+      setShowJoinModal(false)
+      toast.error(error.reason ? error.reason : "Deposit Failed ")
     }
   }
 
@@ -118,9 +145,21 @@ const JoinPublicClub = () => {
         <button onClick={() => router.back()} className="w-[200px] h-[58px] rounded-lg bg-white border border-[#2A0FB1] text-[#2A0FB1] text-[17px] block leading-[25.5px] tracking-[0.5%] mt-[10px] ">
           Go Back
         </button>
+        <>
+
+        </>
+        {
+          !status ?
         <button onClick={() => setShowJoinModal(true)} className="w-[200px] h-[58px] rounded-lg bg-[#2A0FB1] border border-[#2A0FB1] text-[#fefefe] text-[17px] block leading-[25.5px] tracking-[0.5%] mt-[10px] ">
           Join Now
         </button>
+        :
+       
+      
+        <button onClick={() => setShowDepositModal(true)} className="w-[200px] h-[58px] rounded-lg bg-[#2A0FB1] border border-[#2A0FB1] text-[#fefefe] text-[17px] block leading-[25.5px] tracking-[0.5%] mt-[10px] ">
+          Deposit
+        </button>
+        }
       </div>
 
       <div className='flex flex-wrap gap-4 mt-16'>
@@ -148,12 +187,37 @@ const JoinPublicClub = () => {
               <p className="py-4">You are about to join this club savings</p>
               <div className="modal-action justify-center">
                 <label onClick={() => setShowJoinModal(false)} htmlFor="my_modal_6" className="btn bg-white text-black">Close!</label>
-                <label onClick={() => joinSavingsClub()} htmlFor="my_modal_" className="btn bg-[#2A0FB1] border border-[#2A0FB1] text-[#fefefe]">{joining ? "Joining" : "Proceed"}</label>
+                <label onClick={() => DepositSavingsClub()} htmlFor="my_modal_" className="btn bg-[#2A0FB1] border border-[#2A0FB1] text-[#fefefe]">{joining ? "Joining" : "Proceed"}</label>
+                <label 
+                // onClick={() => joinSavingsClub()} 
+                htmlFor="my_modal_" className="btn bg-[#2A0FB1] border border-[#2A0FB1] text-[#fefefe]">Deposit</label>
               </div>
             </div>
           </div>
         </div>
       }
+      { showDepositModal &&
+        <div>
+          <input type="checkbox" checked={true} id="my_modal_6" className="modal-toggle" />
+          <div className="modal bg-white">
+            <div className="modal-box">
+              <h3 className="font-bold text-lg text-center">Deposit into {name} </h3>
+              <div className="flex flex-col justify-center">
+              <p className="py-4">Deposit Amout</p>
+              <input type="text" placeholder='Deposit Amount' value={amount} onChange={(e)=>setAmount(e.target.value)}/>
+
+              </div>
+              <div className="modal-action justify-center">
+                <label onClick={() => setShowDepositModal(false)} htmlFor="my_modal_6" className="btn bg-white text-black">Close!</label>
+                
+                <label 
+                onClick={() => DepositSavingsClub()} 
+                htmlFor="my_modal_" className="btn bg-[#2A0FB1] border border-[#2A0FB1] text-[#fefefe]">{joining ? "Depositing..." : "Deposit"}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+       } 
     </Layout>
   )
 }
